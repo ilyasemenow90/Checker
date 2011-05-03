@@ -23,6 +23,7 @@ namespace Шашки
         string playerMove;
         int withHuman;
 
+        bool logMove; //отображать ходы в подписи формы?
         [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
         static extern void EI_MakeMove(string move);
 
@@ -66,9 +67,7 @@ namespace Шашки
         {
             InitializeComponent();
 
-            Шашки.Properties.Settings.Default.FirstStart = true;
-            Шашки.Properties.Settings.Default.Save();
-
+            logMove = false;
             if (Шашки.Properties.Settings.Default.FirstStart)
             {
                 WhomToPlay addForm = new WhomToPlay();
@@ -90,7 +89,7 @@ namespace Шашки
             realForm = this;
 
 
-            startNewGame();
+            startNewGame(true);
         }
 
 
@@ -260,7 +259,6 @@ namespace Шашки
         /// <summary>
         ///   Проверяет может ли шашка сделать ход
         /// </summary>
-        //переписать проверку для дамок и переписать проверку, а если мы около конца стола стоим???
         private bool checkerCanMove(Checker ch)
         {
             if (ch.position.X < 1 || ch.position.Y < 1 || ch.position.X > 8 || ch.position.Y > 8)
@@ -349,9 +347,12 @@ namespace Шашки
         /// </summary>
         private void pictureBox_Click(object sender, EventArgs e)
         {
-            if (Шашки.Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+            if (withHuman == 0)
             {
-                return;
+                if (Шашки.Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+                {
+                    return;
+                }
             }
             Checker active = (Checker)sender;
             foreach (Checker obj in checkerArray)
@@ -381,7 +382,11 @@ namespace Шашки
                     //b - 98   
                     //c - 99   7 - 55
                     playerMove = this.convertPointToCheckerString(obj.position.X, obj.position.Y);
-                    this.Text = playerMove;
+                    if (logMove)
+                    {
+                        this.Text = playerMove;
+                    }
+                    
                 }
                 else
                 {
@@ -441,9 +446,12 @@ namespace Шашки
         /// </summary>
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (Шашки.Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+            if (withHuman == 0)
             {
-                return;
+                if (Шашки.Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+                {
+                    return;
+                }
             }
 
             Checker active = this.getActiveChecker();
@@ -475,7 +483,10 @@ namespace Шашки
                                     fightMove = true;
                                     active.fight = true;
                                     playerMove += ":" + convertPointToCheckerString(searchPoint.X, searchPoint.Y);
-                                    this.Text = playerMove;
+                                    if (logMove)
+                                    {
+                                        this.Text = playerMove;
+                                    }
                                     deleteChecker(searchPoint);
                                     break;
                                 }
@@ -493,7 +504,10 @@ namespace Шашки
                                 deleteCh.X -= deltaX < 0 ? -1 : 1;
                                 deleteCh.Y -= deltaY < 0 ? -1 : 1;
                                 playerMove += ":" + convertPointToCheckerString(deleteCh.X, deleteCh.Y);
-                                this.Text = playerMove;
+                                if (logMove)
+                                {
+                                    this.Text = playerMove;
+                                }
                                 deleteChecker(deleteCh);
                             }
                         }
@@ -564,7 +578,10 @@ namespace Шашки
             }
             playerMove += addString;
             activeCh.fight = false;
-            this.Text = playerMove;
+            if (logMove)
+            {
+                this.Text = playerMove;
+            }
 
 
             if (withHuman == 0)
@@ -580,7 +597,7 @@ namespace Шашки
             }
             else
             {
-                if (Шашки.Properties.Settings.Default.Game_type == 0)
+                if (withHuman == 0)
                 {
                     computerStep();
                 }
@@ -609,7 +626,7 @@ namespace Шашки
             DialogResult result1 = MessageBox.Show("Вы проиграли.\nЖелаете начать новую игру?", "Игра окончена", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
-                startNewGame();
+                startNewGame(true);
             }
             else
             {
@@ -620,11 +637,14 @@ namespace Шашки
         /// <summary>
         ///   Начать новую игру
         /// </summary>
-        private void startNewGame()
+        private void startNewGame(bool changeHuman)
         {
             highlight = false;
             step = false;
-            withHuman = Шашки.Properties.Settings.Default.Game_type;
+            if (changeHuman)
+            {
+                withHuman = Шашки.Properties.Settings.Default.Game_type;
+            }
             resetAllCheckersOnBoard();
             if (withHuman == 0) //с компьютером
             {
@@ -1085,15 +1105,22 @@ namespace Шашки
             {
                 string moveString = pv.ToString();
                 Form1.moveFromString(moveString);
-                realForm.Text = moveString;
+                if (realForm.logMove)
+                {
+                    realForm.Text = moveString;
+                } 
             }
             else
             if (score == depth && depth == speed && speed == 111) //Ошибка!
             {
                 string moveString = pv.ToString();
                 MessageBox.Show(moveString);
-                realForm.Text = moveString;
-            } else
+                if (realForm.logMove)
+                {
+                    realForm.Text = moveString;
+                }
+            }
+            else if (realForm.logMove)
             {
                 Form1.ActiveForm.Text = "score = " + score.ToString() + " depth = " + depth.ToString() + " speed = " + speed.ToString()
                 + " pv = " + pv.ToString();
@@ -1109,6 +1136,22 @@ namespace Шашки
         private void button3_Click(object sender, EventArgs e)
         {
             gameEnded();
+        }
+
+        private void сКомпьютеромToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            withHuman = 0;
+            Шашки.Properties.Settings.Default.Game_type = withHuman;
+            Шашки.Properties.Settings.Default.Save();
+            startNewGame(false);
+        }
+
+        private void сЧеловекомToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            withHuman = 1;
+            Шашки.Properties.Settings.Default.Game_type = withHuman;
+            Шашки.Properties.Settings.Default.Save();
+            startNewGame(false);
         }
 
     }
