@@ -244,6 +244,19 @@ namespace Шашки
             return canFight;
         }
 
+
+        /// <summary>
+        ///   Проверяет входит ли точка в "стол"
+        /// </summary>
+        private bool pointIsGood(Point checkPoint)
+        {
+            if (checkPoint.X < 1 || checkPoint.Y < 1 || checkPoint.X > 8 || checkPoint.Y > 8)
+            {
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         ///   Проверяет может ли шашка сделать ход
         /// </summary>
@@ -258,25 +271,40 @@ namespace Шашки
             bool down = ch.color;
 
             Point activePoint = ch.position;
-            //сначала делаем проверку на то, а можем ли мы пойти
-            Checker[] chArray = new Checker[2];
-            if (down)
+            Point[] chArray = new Point[4];
+            if (ch.king)
             {
-                chArray[0] = this.checkerFromPosition(new Point(activePoint.X - 1, activePoint.Y - 1)); //нижняя левая
-                chArray[1] = this.checkerFromPosition(new Point(activePoint.X + 1, activePoint.Y - 1)); //нижняя правая
+                chArray[0] = new Point(activePoint.X - 1, activePoint.Y - 1); //нижняя левая
+                chArray[1] = new Point(activePoint.X + 1, activePoint.Y - 1); //нижняя правая
+                chArray[2] = new Point(activePoint.X - 1, activePoint.Y + 1); //верхняя левая
+                chArray[3] = new Point(activePoint.X + 1, activePoint.Y + 1); //верхняя правая
             }
             else
             {
-                chArray[0] = this.checkerFromPosition(new Point(activePoint.X - 1, activePoint.Y + 1)); //верхняя левая
-                chArray[1] = this.checkerFromPosition(new Point(activePoint.X + 1, activePoint.Y + 1)); //верхняя правая
+                if (down)
+                {
+                    chArray[0] = new Point(activePoint.X - 1, activePoint.Y - 1); //нижняя левая
+                    chArray[1] = new Point(activePoint.X + 1, activePoint.Y - 1); //нижняя правая
+                }
+                else
+                {
+                    chArray[0] = new Point(activePoint.X - 1, activePoint.Y + 1); //верхняя левая
+                    chArray[1] = new Point(activePoint.X + 1, activePoint.Y + 1); //верхняя правая
+                }
             }
+            
 
             for (int i = 0; i < chArray.Length; i++)
             {
-                if (chArray[i] == null)
+                Point findPoint = chArray[i];
+                if (pointIsGood(findPoint))
                 {
-                    canMove = true;
-                    break;
+                    Checker checkCh = checkerFromPosition(findPoint);
+                    if (checkCh == null)
+                    {
+                        canMove = true;
+                        break;
+                    }
                 }
             }
             
