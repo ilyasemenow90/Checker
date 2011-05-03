@@ -16,11 +16,21 @@ namespace Шашки
     {
         Checker[] checkerArray;  //массив шашек
         bool highlight;  //подсвечивать возможные ходы?
-        bool step; //чей ход  true = верхние false = нижние
+        /// <summary>
+        ///   Чей ход  true = верхние false = нижние
+        /// </summary>
+        bool step; 
         string playerMove;
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        static extern void EI_MakeMove(StringBuilder move);
+        [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
+        static extern void EI_MakeMove(string move);
+
+        /*
+        [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
+        static extern void EI_MakeMoveString(string move);
+
+        [DllImport("SiDra.dll", CharSet = CharSet.Ansi, EntryPoint = "Transfer")]
+        static extern void Transfer (string str);*/
 
         [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
         static extern StringBuilder EI_Think();
@@ -61,6 +71,19 @@ namespace Шашки
         public Form1()
         {
             InitializeComponent();
+
+            Шашки.Properties.Settings.Default.FirstStart = true;
+            Шашки.Properties.Settings.Default.Save();
+
+            if (Шашки.Properties.Settings.Default.FirstStart)
+            {
+                WhomToPlay addForm = new WhomToPlay();
+                //addForm.Parent = this;
+                addForm.ShowDialog(this);
+                Шашки.Properties.Settings.Default.FirstStart = false;
+                Шашки.Properties.Settings.Default.Save();
+            }
+
             highlight = false;
             step = false; //первые ходят нижние
             checkerArray = new Checker[24];
@@ -71,6 +94,9 @@ namespace Шашки
             this.createCheckers(0, 12, true);
             this.createCheckers(12, 24, false);
             realForm = this;
+
+
+            startNewGame();
         }
 
 
@@ -301,6 +327,10 @@ namespace Шашки
         /// </summary>
         private void pictureBox_Click(object sender, EventArgs e)
         {
+            if (Шашки.Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+            {
+                return;
+            }
             Checker active = (Checker)sender;
             foreach (Checker obj in checkerArray)
             {
@@ -389,9 +419,14 @@ namespace Шашки
         /// </summary>
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
+            if (Шашки.Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+            {
+                return;
+            }
+
             Checker active = this.getActiveChecker();
             
-            //
+
             if (null != active)
             {
                 Point newPoint = getPointOnPosition(e.X, e.Y);
@@ -509,10 +544,24 @@ namespace Шашки
             activeCh.fight = false;
             this.Text = playerMove;
 
+
+            if (Шашки.Properties.Settings.Default.Game_type == 0)
+            {
+                //Если играем с комьютером передаем ему строку движения шашки
+                this.userMove(playerMove);
+            }
+
             Checker[] find = solveCheckers();
             if (find.Length == 0)
             {
                 gameEnded();
+            }
+            else
+            {
+                if (Шашки.Properties.Settings.Default.Game_type == 0)
+                {
+                    computerStep();
+                }
             }
         }
 
@@ -540,6 +589,15 @@ namespace Шашки
         {
             highlight = false;
             step = false;
+            if (Шашки.Properties.Settings.Default.Game_type == 0) //с компьютером
+            {
+                newGame();
+                if (Шашки.Properties.Settings.Default.Player1_color) //игрок ходит черными!!!
+                {
+                    //делаем ход компьютера
+                    computerStep();
+                }
+            }
         }
 
 
@@ -928,8 +986,17 @@ namespace Шашки
                     realForm.moveChecker(fromPoint, toPoint);
                     i += 4;
                 }
-                
             }
+
+
+
+            Checker[] find = realForm.solveCheckers();
+            if (find.Length == 0)
+            {
+                realForm.gameEnded();
+            }
+
+
         }
 
 
@@ -939,8 +1006,12 @@ namespace Шашки
         //Дописать!!!
         private void userMove(string move)
         {
-            StringBuilder moveBuilder = new StringBuilder(move);
-            EI_MakeMove(moveBuilder);
+            EI_MakeMove(move);
+            //StringBuilder moveBuilder = new StringBuilder(move);
+            //EI_MakeMove(moveBuilder, moveBuilder.Length);
+            //EI_MakeMoveString(move);
+            //Transfer(move);
+            
         }
 
 
@@ -956,6 +1027,12 @@ namespace Шашки
                 realForm.Text = moveString;
             }
             else
+            if (score == depth && depth == speed && speed == 111) //Ошибка!
+            {
+                string moveString = pv.ToString();
+                MessageBox.Show(moveString);
+                realForm.Text = moveString;
+            } else
             {
                 Form1.ActiveForm.Text = "score = " + score.ToString() + " depth = " + depth.ToString() + " speed = " + speed.ToString()
                 + " pv = " + pv.ToString();

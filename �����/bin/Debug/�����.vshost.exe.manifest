@@ -42,24 +42,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Шашки.exe" size="104960">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Шашки.exe" size="107008">
       <assemblyIdentity name="Шашки" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>lyCs99hB9HXUlO3/yy/aOk6Ss30=</dsig:DigestValue>
+        <dsig:DigestValue>jKH/UN4MUWE3QizZkHoyVd05lJA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="SiDra.dll" size="82432">
+  <file name="SiDra.dll" size="82944">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>21BdEZA1eFzDX83DBVsjARHU9/g=</dsig:DigestValue>
+      <dsig:DigestValue>8tcP0BBZQtorLQK8JmvM4xdn0Uk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Ресурсы\Шашка 1_дамка.png" size="4673">
@@ -80,13 +80,13 @@
       <dsig:DigestValue>43e6lC5ULst0kp1IEb5uimJYcEM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Шашки.exe.config" size="1828">
+  <file name="Шашки.exe.config" size="1951">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>5MAxB3SX6FJd0fm7/F2AYbriNRU=</dsig:DigestValue>
+      <dsig:DigestValue>ip80EB1FFn6m+9YId7TCG6elmyA=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
