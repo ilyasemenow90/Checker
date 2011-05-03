@@ -559,6 +559,19 @@ namespace Шашки
             }
         }
 
+        /// <summary>
+        ///   Восстанавливает все шашки на столе в default положение
+        /// </summary>
+        private void resetAllCheckersOnBoard()
+        {
+            for (int i = 0; i < checkerArray.Length; i++)
+            {
+                Checker ch = (Checker)checkerArray[i];
+                ch.setDefaultValue();
+            }
+            this.createCheckers(0, 12, true);
+            this.createCheckers(12, 24, false);
+        }
 
         /// <summary>
         ///   Игра окончена
@@ -584,6 +597,7 @@ namespace Шашки
             highlight = false;
             step = false;
             withHuman = Шашки.Properties.Settings.Default.Game_type;
+            resetAllCheckersOnBoard();
             if (withHuman == 0) //с компьютером
             {
                 newGame();
