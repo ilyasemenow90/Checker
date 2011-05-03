@@ -979,12 +979,12 @@ namespace Шашки
                     }
 
                    
-                    /*
+                    
                     int numberToVertical = (int)moveToLetter - 96;
                     int numberToHorizontal = (int)moveToNumber - 48;
                     Point toPoint = new Point(numberToVertical, numberToHorizontal);
                     realForm.moveChecker(fromPoint, toPoint);
-                    */
+                    
                     i = move.Length;
                     
                 }
