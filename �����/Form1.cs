@@ -474,7 +474,7 @@ namespace Шашки
                         {
                             int deltaForX = (newPointForCh.X - active.position.X) / Math.Abs(newPointForCh.X - active.position.X);
                             int deltaForY = (newPointForCh.Y - active.position.Y) / Math.Abs(newPointForCh.Y - active.position.Y);
-                            for (int i = 1; i < 8; i++ )
+                            for (int i = 1; i < Math.Abs(newPointForCh.X - active.position.X) + 1; i++)
                             {
                                 Point searchPoint = new Point(active.position.X + deltaForX * i, active.position.Y + deltaForY * i);
                                 Checker findCh = checkerFromPosition(searchPoint);
@@ -599,11 +599,20 @@ namespace Шашки
             {
                 if (withHuman == 0)
                 {
-                    computerStep();
+                    timerForComputerStep = new Timer();
+                    timerForComputerStep.Interval = 10;
+                    timerForComputerStep.Tick += new EventHandler(computerTimerElapsed);
+                    timerForComputerStep.Enabled = true;
                 }
             }
         }
 
+        private Timer timerForComputerStep;
+        private void computerTimerElapsed(Object sender, EventArgs e)
+        {
+            computerStep();
+            timerForComputerStep.Enabled = false;
+        }
         /// <summary>
         ///   Восстанавливает все шашки на столе в default положение
         /// </summary>
@@ -902,10 +911,8 @@ namespace Шашки
         /// </summary>
         private void computerStep()
         {
-           // EI_SetTimeControl()
-            EI_SetTime(5 * 1000, 1000); //5 * 1000 миллисекунд свое время   99 противника
+            EI_SetTime(1 * 100, 1000); //5 * 1000 миллисекунд свое время   1000 противника
             EI_Think();
-           // EI_Think();
         }
 
         /// <summary>
@@ -916,7 +923,6 @@ namespace Шашки
             EI_NewGame();
             EI_Initialization(method, (int)16384); //2^14
             EI_SetTimeControl((int)24 * 60, 0); //24 * 60 минут на партию   0 - бонус за ход
-            step = false;
         }
 
 
@@ -954,7 +960,6 @@ namespace Шашки
                             }
                         }
                     }
-
                     ch.Location = new Point((ch.position.X - 1) * 50,  (8 - ch.position.Y) * 50);
                     ch.click = false;
                     highlight = false;
