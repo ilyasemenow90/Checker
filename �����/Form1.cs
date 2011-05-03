@@ -21,16 +21,10 @@ namespace Шашки
         /// </summary>
         bool step; 
         string playerMove;
+        int withHuman;
 
         [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
         static extern void EI_MakeMove(string move);
-
-        /*
-        [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
-        static extern void EI_MakeMoveString(string move);
-
-        [DllImport("SiDra.dll", CharSet = CharSet.Ansi, EntryPoint = "Transfer")]
-        static extern void Transfer (string str);*/
 
         [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
         static extern StringBuilder EI_Think();
@@ -545,7 +539,7 @@ namespace Шашки
             this.Text = playerMove;
 
 
-            if (Шашки.Properties.Settings.Default.Game_type == 0)
+            if (withHuman == 0)
             {
                 //Если играем с комьютером передаем ему строку движения шашки
                 this.userMove(playerMove);
@@ -589,7 +583,8 @@ namespace Шашки
         {
             highlight = false;
             step = false;
-            if (Шашки.Properties.Settings.Default.Game_type == 0) //с компьютером
+            withHuman = Шашки.Properties.Settings.Default.Game_type;
+            if (withHuman == 0) //с компьютером
             {
                 newGame();
                 if (Шашки.Properties.Settings.Default.Player1_color) //игрок ходит черными!!!
@@ -868,17 +863,40 @@ namespace Шашки
         /// </summary>
         public void moveChecker(Point fromPoint, Point toPoint)
         {
+            if (fromPoint.X == toPoint.X & fromPoint.Y == toPoint.Y)
+            {
+                return;
+            }
             foreach (Checker ch in checkerArray)
             {
                 if (ch.position == fromPoint)
                 {
                     ch.position = toPoint;
 
+                    if (!ch.king)
+                    {
+                        if (ch.color)
+                        {
+                            if (toPoint.Y == 1)
+                            {
+                                ch.king = true;
+                                ch.Image = Properties.Resources.Шашка_1_дамка;
+                            }
+                        }
+                        else
+                        {
+                            if (toPoint.Y == 8)
+                            {
+                                ch.king = true;
+                                ch.Image = Properties.Resources.Шашка_2_дамка;
+                            }
+                        }
+                    }
+
                     ch.Location = new Point((ch.position.X - 1) * 50,  (8 - ch.position.Y) * 50);
                     ch.click = false;
                     highlight = false;
                     pictureBox1.Invalidate();
-                    step = !step;
 
                     break;
                 }
@@ -937,7 +955,12 @@ namespace Шашки
                     char moveToLetter = words[words.Length - 1][0];
                     char moveToNumber = words[words.Length - 1][1];
 
-                    for (int j = 1; j < words.Length; j++)
+                    int numberFromVertical = (int)moveFromLetter - 96;
+                    int numberFromHorizontal = (int)moveFromNumber - 48;
+
+                    Point fromPoint = new Point(numberFromVertical, numberFromHorizontal);
+
+                    for (int j = 1; j < words.Length - 1; j++)
                     {
                         string deleteChStr = words[j];
                         //delete
@@ -948,24 +971,20 @@ namespace Шашки
                         int numberDeleteHorizontal = (int)deleteNumber - 48;
 
                         Point deletePoint = new Point(numberDeleteVertical, numberDeleteHorizontal);
-
+                        Point newToPoint = new Point(deletePoint.X + (deletePoint.X - fromPoint.X), deletePoint.Y + (deletePoint.Y - fromPoint.Y));
+                       // realForm.moveChecker(fromPoint, toPoint);
                         realForm.deleteChecker(deletePoint);
+                        realForm.moveChecker(fromPoint, newToPoint);
+                        fromPoint = newToPoint;
                     }
 
-                    int numberFromVertical = (int)moveFromLetter - 96;
-                    int numberFromHorizontal = (int)moveFromNumber - 48;
-
+                   
+                    /*
                     int numberToVertical = (int)moveToLetter - 96;
                     int numberToHorizontal = (int)moveToNumber - 48;
-
-                   
-                    Point fromPoint = new Point(numberFromVertical, numberFromHorizontal);
                     Point toPoint = new Point(numberToVertical, numberToHorizontal);
-
-
-                    
                     realForm.moveChecker(fromPoint, toPoint);
-
+                    */
                     i = move.Length;
                     
                 }
@@ -989,13 +1008,13 @@ namespace Шашки
             }
 
 
-
+            realForm.step = !realForm.step;
             Checker[] find = realForm.solveCheckers();
             if (find.Length == 0)
             {
                 realForm.gameEnded();
             }
-
+            
 
         }
 
