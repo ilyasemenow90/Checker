@@ -1,0 +1,64 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="public" priority="0" />
+      <Item value="var" priority="6" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.Designer.cs" caret="34921" fromTop="16" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="40587" fromTop="18" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="30849" fromTop="21" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31182" fromTop="21" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31280" fromTop="18" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31098" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31539" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31735" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31883" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.Designer.cs" caret="34797" fromTop="11" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31397" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="32132" fromTop="16" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="32316" fromTop="19" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="33683" fromTop="18" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="33683" fromTop="18" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="32502" fromTop="13" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="33874" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="34407" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="35506" fromTop="16" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="36196" fromTop="16" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="36047" fromTop="16" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="36679" fromTop="13" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="37571" fromTop="16" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="38155" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="38348" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="38621" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="39228" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="39750" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="40032" fromTop="23" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="39625" fromTop="20" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="40526" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="39521" fromTop="15" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+</Configuration>

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,36 +12,30 @@ namespace Шашки
 {
     public partial class Form1 : Form
     {
-        Checker[] checkerArray;  //массив шашек
-        bool highlight;  //подсвечивать возможные ходы?
-        /// <summary>
-        ///   Чей ход  true = верхние false = нижние
-        /// </summary>
-        bool step; 
-        string playerMove;
-        int withHuman;
+        bool _highlight;  //подсвечивать возможные ходы?
+        string _playerMove;
+        int _withHuman;
 
-        bool logMove; //отображать ходы в подписи формы?
         [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
         static extern void EI_MakeMove(string move);
 
         [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
         static extern StringBuilder EI_Think();
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        static extern StringBuilder EI_PonderHit(StringBuilder move);
+        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        //static extern StringBuilder EI_PonderHit(StringBuilder move);
 
         [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        static extern void EI_Initialization(PF_SearchInfo si, int mem_lim);
+        static extern void EI_Initialization(PfSearchInfo si, int memLim);
 
         [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
         static extern void EI_NewGame();
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        static extern void EI_Stop();
+        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        //static extern void EI_Stop();
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        static extern void EI_SetupBoard(StringBuilder pos);
+        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        //static extern void EI_SetupBoard(StringBuilder pos);
 
         [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
         static extern void EI_SetTimeControl(int time, int inc);
@@ -51,16 +43,15 @@ namespace Шашки
         [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
         static extern void EI_SetTime(int time, int otime);
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        static extern StringBuilder EI_GetName();
+        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+       // static extern StringBuilder EI_GetName();
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        static extern void EI_OnExit();
+        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        //static extern void EI_OnExit();
 
-        delegate void PF_SearchInfo(int score, int depth, int speed, StringBuilder pv, StringBuilder cm);
-        static PF_SearchInfo method = new PF_SearchInfo(Form1.seacrResultDelegate);
+        delegate void PfSearchInfo(int score, int depth, int speed, StringBuilder pv, StringBuilder cm);
 
-        static Form1 realForm = null;
+        static Form1 _realForm;
 
 
         public Form1()
@@ -68,35 +59,35 @@ namespace Шашки
             InitializeComponent();
 
             logMove = false;
-            if (Шашки.Properties.Settings.Default.FirstStart)
+            if (Properties.Settings.Default.FirstStart)
             {
-                WhomToPlay addForm = new WhomToPlay();
+                var addForm = new WhomToPlay();
                 //addForm.Parent = this;
                 addForm.ShowDialog(this);
-                Шашки.Properties.Settings.Default.FirstStart = false;
-                Шашки.Properties.Settings.Default.Save();
+                Properties.Settings.Default.FirstStart = false;
+                Properties.Settings.Default.Save();
             }
 
-            highlight = false;
+            _highlight = false;
             step = false; //первые ходят нижние
             checkerArray = new Checker[24];
             for (int i = 0; i < checkerArray.Length; i++)
             {
                 checkerArray[i] = new Checker();
             }
-            this.createCheckers(0, 12, true);
-            this.createCheckers(12, 24, false);
-            realForm = this;
+            CreateCheckers(0, 12, true);
+            CreateCheckers(12, 24, false);
+            _realForm = this;
 
 
-            startNewGame(true);
+            StartNewGame(true);
         }
 
 
         /// <summary>
         ///   Создает шашки для игры
         /// </summary>
-        private void createCheckers(int start, int end, bool color)
+        private void CreateCheckers(int start, int end, bool color)
         {
             int deltaX = 0;
             int deltaY = 0;
@@ -124,10 +115,10 @@ namespace Шашки
                 int posX = startZero ? 0 : 50;
                 asd.Location = new Point(posX + 100 * deltaX, 0 + 50 * deltaY);
                 asd.SizeMode = PictureBoxSizeMode.StretchImage;
-                asd.Image = color == true ? Properties.Resources.Шашка_1 : Properties.Resources.Шашка_2;
+                asd.Image = color ? Properties.Resources.Шашка_1 : Properties.Resources.Шашка_2;
                 asd.color = color;
-                asd.BackColor = System.Drawing.Color.Transparent;
-                asd.Click += new EventHandler(pictureBox_Click);
+                asd.BackColor = Color.Transparent;
+                asd.Click += PictureBoxClick;
                 asd.BringToFront();
 
                 ++deltaX;
@@ -142,24 +133,15 @@ namespace Шашки
 
 
         /// <summary>
-        ///   Конвертирует позицию в строку для передачи движку
-        /// </summary>
-        private string convertPointToCheckerString(int x, int y)
-        {
-            return (Convert.ToChar(97 + x - 1).ToString() + Convert.ToChar(48 + y).ToString());
-        }
-
-        /// <summary>
         ///   Проверяет может ли шашка забрать другую шашку
         /// </summary>
-        private bool fightChecker(Checker ch)
+        bool FightChecker(Checker ch)
         {
             if (ch.position.X < 1 || ch.position.Y < 1 || ch.position.X > 8 || ch.position.Y > 8)
             {
                 return false;
             }
             bool canFight = false;
-            bool down = ch.color;
             if (ch.king)
             {
                 Point activePoint = ch.position;
@@ -179,35 +161,28 @@ namespace Шашки
                         }
                         for (int i = 1; i < 9; i++)
                         {
-                            
                             if (canFight)
                             {
                                 break;
                             }
-                            Checker chnew = this.checkerFromPosition(new Point(activePoint.X + deltaX * i, activePoint.Y + deltaY * i)); //берем все шашки во всех направлениях
+                            Checker chnew = CheckerFromPosition(new Point(activePoint.X + deltaX * i, activePoint.Y + deltaY * i)); //берем все шашки во всех направлениях
                             if (chnew != null)
                             {
                                 if (chnew.color != ch.color)
                                 {
                                     int xMove = activePoint.X + deltaX * (i + 1);
                                     int yMove = activePoint.Y + deltaY * (i + 1);
-                                    Point killMove = new Point(xMove, yMove);
-                                    if (this.checkerFromPosition(killMove) == null && killMove.X > 0 && killMove.X < 9
+                                    var killMove = new Point(xMove, yMove);
+                                    if (CheckerFromPosition(killMove) == null && killMove.X > 0 && killMove.X < 9
                                         && killMove.Y > 0 && killMove.Y < 9)  //значит можно бить шашку
                                     {
                                         canFight = true;
                                         break;
                                     }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                else
-                                {
-                                    //наткнулись на шашки нашего цвета, значит дальше в этом направлении проверять смысла нет
                                     break;
                                 }
+                                 //наткнулись на шашки нашего цвета, значит дальше в этом направлении проверять смысла нет
+                                 break;
                             }
                         }
                     }
@@ -217,22 +192,21 @@ namespace Шашки
             {
                 Point activePoint = ch.position;
                 //сначала делаем проверку на то, а можем ли мы побить какую-нибуь шашку рядом
-                Checker[] chArray = new Checker[4];
-                chArray[0] = this.checkerFromPosition(new Point(activePoint.X - 1, activePoint.Y + 1)); //верхняя левая
-                chArray[1] = this.checkerFromPosition(new Point(activePoint.X + 1, activePoint.Y + 1)); //верхняя правая
-                chArray[2] = this.checkerFromPosition(new Point(activePoint.X - 1, activePoint.Y - 1)); //нижняя левая
-                chArray[3] = this.checkerFromPosition(new Point(activePoint.X + 1, activePoint.Y - 1)); //нижняя правая
-                for (int i = 0; i < chArray.Length; i++)
+                var chArray = new Checker[4];
+                chArray[0] = CheckerFromPosition(new Point(activePoint.X - 1, activePoint.Y + 1)); //верхняя левая
+                chArray[1] = CheckerFromPosition(new Point(activePoint.X + 1, activePoint.Y + 1)); //верхняя правая
+                chArray[2] = CheckerFromPosition(new Point(activePoint.X - 1, activePoint.Y - 1)); //нижняя левая
+                chArray[3] = CheckerFromPosition(new Point(activePoint.X + 1, activePoint.Y - 1)); //нижняя правая
+                foreach (Checker chFind in chArray)
                 {
-                    Checker chFind = chArray[i];
                     if (chFind != null)
                     {
                         if (ch.color != chFind.color)//шашки разные
                         {
                             int xMove = chFind.position.X - ch.position.X;
                             int yMove = chFind.position.Y - ch.position.Y;
-                            Point killMove = new Point(chFind.position.X + xMove, chFind.position.Y + yMove);
-                            if (this.checkerFromPosition(killMove) == null && killMove.X > 0 && killMove.X < 9 && killMove.Y > 0 && killMove.Y < 9)  //значит можно бить шашку
+                            var killMove = new Point(chFind.position.X + xMove, chFind.position.Y + yMove);
+                            if (CheckerFromPosition(killMove) == null && killMove.X > 0 && killMove.X < 9 && killMove.Y > 0 && killMove.Y < 9)  //значит можно бить шашку
                             {
                                 canFight = true;
                             }
@@ -247,7 +221,7 @@ namespace Шашки
         /// <summary>
         ///   Проверяет входит ли точка в "стол"
         /// </summary>
-        private bool pointIsGood(Point checkPoint)
+        public bool PointIsGood(Point checkPoint)
         {
             if (checkPoint.X < 1 || checkPoint.Y < 1 || checkPoint.X > 8 || checkPoint.Y > 8)
             {
@@ -259,17 +233,16 @@ namespace Шашки
         /// <summary>
         ///   Проверяет может ли шашка сделать ход
         /// </summary>
-        private bool checkerCanMove(Checker ch)
+        private bool CheckerCanMove(Checker ch)
         {
             if (ch.position.X < 1 || ch.position.Y < 1 || ch.position.X > 8 || ch.position.Y > 8)
             {
                 return false;
             }
-            bool canMove = false;
             bool down = ch.color;
 
             Point activePoint = ch.position;
-            Point[] chArray = new Point[4];
+            var chArray = new Point[4];
             if (ch.king)
             {
                 chArray[0] = new Point(activePoint.X - 1, activePoint.Y - 1); //нижняя левая
@@ -290,51 +263,34 @@ namespace Шашки
                     chArray[1] = new Point(activePoint.X + 1, activePoint.Y + 1); //верхняя правая
                 }
             }
-            
 
-            for (int i = 0; i < chArray.Length; i++)
-            {
-                Point findPoint = chArray[i];
-                if (pointIsGood(findPoint))
-                {
-                    Checker checkCh = checkerFromPosition(findPoint);
-                    if (checkCh == null)
-                    {
-                        canMove = true;
-                        break;
-                    }
-                }
-            }
-            
-            return canMove;
+
+            return (from findPoint in chArray where PointIsGood(findPoint) select CheckerFromPosition(findPoint)).Any(checkCh => checkCh == null);
         }
 
         /// <summary>
         ///   Возвращает все шашки, которые могут ходить
         /// </summary>
-        private Checker[] solveCheckers()
+        private Checker[] SolveCheckers()
         {
-            ArrayList solveArray = new ArrayList();
+            var solveArray = new ArrayList();
             //Проверка на шашки, которые должны бить другие шашки
-            foreach (Checker obj in checkerArray)
+            foreach (Checker obj in checkerArray.Where(obj => obj.color == step & FightChecker(obj)))
             {
-                if (obj.color == step & fightChecker(obj))
-                {
-                    solveArray.Add(obj);
-                }
+                solveArray.Add(obj);
             }
             if (solveArray.Count == 0) //Если ни одна из шашек не бьет, значит надо проверить на простые ходы
             {
                 foreach (Checker obj in checkerArray)
                 {
-                    if (obj.color == step & checkerCanMove(obj))
+                    if (obj.color == step & CheckerCanMove(obj))
                     {
                         solveArray.Add(obj);
                     }
                 }
             }
-            Checker[] retCh = new Checker[solveArray.Count];
-            for (int i = 0; i < solveArray.Count; i++ )
+            var retCh = new Checker[solveArray.Count];
+            for (var i = 0; i < solveArray.Count; i++ )
             {
                 retCh[i] = (Checker)solveArray[i];
             }
@@ -345,17 +301,17 @@ namespace Шашки
         /// <summary>
         ///   Обработчик нажатий шашек
         /// </summary>
-        private void pictureBox_Click(object sender, EventArgs e)
+        private void PictureBoxClick(object sender, EventArgs e)
         {
-            if (withHuman == 0)
+            if (_withHuman == 0)
             {
-                if (Шашки.Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+                if (Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
                 {
                     return;
                 }
             }
-            Checker active = (Checker)sender;
-            foreach (Checker obj in checkerArray)
+            var active = (Checker)sender;
+            foreach (var obj in checkerArray)
             {
                 if (obj.click & obj.color != active.color)
                 {
@@ -369,22 +325,22 @@ namespace Шашки
                 }
             }
 
-            Checker[] canMoveCheckers = solveCheckers();
+            var canMoveCheckers = SolveCheckers();
 
-            foreach (Checker obj in canMoveCheckers)
+            foreach (var obj in canMoveCheckers)
             {
                 if (obj == sender)
                 {
                     obj.click = true;
-                    highlight = true;
+                    _highlight = true;
                     pictureBox1.Invalidate();
                     //a - 97   
                     //b - 98   
                     //c - 99   7 - 55
-                    playerMove = this.convertPointToCheckerString(obj.position.X, obj.position.Y);
+                    _playerMove = ConvertPointToCheckerString(obj.position.X, obj.position.Y);
                     if (logMove)
                     {
-                        this.Text = playerMove;
+                        Text = _playerMove;
                     }
                     
                 }
@@ -404,114 +360,91 @@ namespace Шашки
         /// <summary>
         ///   Возвращает активную шашку
         /// </summary>
-        private Checker getActiveChecker()
+        private Checker GetActiveChecker()
         {
-            Checker retCh = null;
-            foreach (Checker obj in checkerArray)
-            {
-                if (obj.click == true)
-                {
-                    retCh = obj;
-                    break;
-
-                }
-            }
-            return retCh; 
+            return checkerArray.FirstOrDefault(obj => obj.click); 
         }
 
         /// <summary>
         ///   Возвращает шашку по номеру позиции на игровой доске
         /// </summary>
-        private Checker checkerFromPosition(Point pos)
+        private Checker CheckerFromPosition(Point pos)
         {
-            Checker objCh = null;
             if (pos.X < 1 || pos.Y < 1 || pos.X > 8 || pos.Y > 8)
             {
                 return null;
             }
-            foreach (Checker obj in checkerArray)
-            {
-                if (obj.position.X == pos.X && obj.position.Y == pos.Y)
-                {
-                    objCh = obj;
-                    break;
-                }
-            }
-            return objCh;
+            return checkerArray.FirstOrDefault(obj => obj.position.X == pos.X && obj.position.Y == pos.Y);
         }
 
 
         /// <summary>
         ///   Вызывается, когда отпускается мышка на столе
         /// </summary>
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        private void PictureBox1MouseUp(object sender, MouseEventArgs e)
         {
-            if (withHuman == 0)
+            if (_withHuman == 0)
             {
-                if (Шашки.Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+                if (Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
                 {
                     return;
                 }
             }
 
-            Checker active = this.getActiveChecker();
+            Checker active = GetActiveChecker();
             
 
             if (null != active)
             {
-                Point newPoint = getPointOnPosition(e.X, e.Y);
-                Point newPointForCh = new Point(newPoint.X + 1, 8 - newPoint.Y);
+                var newPoint = GetPointOnPosition(e.X, e.Y);
+                var newPointForCh = new Point(newPoint.X + 1, 8 - newPoint.Y);
 
-                bool moveIsGood = false;
-                bool fightMove = false;
-                Point[] movesPoint = getMovesOnOneMove();
-                foreach (Point a in movesPoint)
+                var moveIsGood = false;
+                var fightMove = false;
+                var movesPoint = GetMovesOnOneMove();
+                if (movesPoint.Any(a => a == newPointForCh))
                 {
-                    if (a == newPointForCh)
+                    moveIsGood = true;
+                    if (active.king) 
                     {
-                        moveIsGood = true;
-                        if (active.king) 
+                        int deltaForX = (newPointForCh.X - active.position.X) / Math.Abs(newPointForCh.X - active.position.X);
+                        int deltaForY = (newPointForCh.Y - active.position.Y) / Math.Abs(newPointForCh.Y - active.position.Y);
+                        for (int i = 1; i < Math.Abs(newPointForCh.X - active.position.X) + 1; i++)
                         {
-                            int deltaForX = (newPointForCh.X - active.position.X) / Math.Abs(newPointForCh.X - active.position.X);
-                            int deltaForY = (newPointForCh.Y - active.position.Y) / Math.Abs(newPointForCh.Y - active.position.Y);
-                            for (int i = 1; i < Math.Abs(newPointForCh.X - active.position.X) + 1; i++)
-                            {
-                                Point searchPoint = new Point(active.position.X + deltaForX * i, active.position.Y + deltaForY * i);
-                                Checker findCh = checkerFromPosition(searchPoint);
-                                if (findCh != null && findCh.color != active.color)
-                                {
-                                    fightMove = true;
-                                    active.fight = true;
-                                    playerMove += ":" + convertPointToCheckerString(searchPoint.X, searchPoint.Y);
-                                    if (logMove)
-                                    {
-                                        this.Text = playerMove;
-                                    }
-                                    deleteChecker(searchPoint);
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            int deltaX = active.position.X - newPointForCh.X;
-                            int deltaY = active.position.Y - newPointForCh.Y;
-                            if (Math.Abs(deltaX) > 1 && Math.Abs(deltaY) > 1)
+                            var searchPoint = new Point(active.position.X + deltaForX * i, active.position.Y + deltaForY * i);
+                            var findCh = CheckerFromPosition(searchPoint);
+                            if (findCh != null && findCh.color != active.color)
                             {
                                 fightMove = true;
                                 active.fight = true;
-                                Point deleteCh = new Point(active.position.X, active.position.Y);
-                                deleteCh.X -= deltaX < 0 ? -1 : 1;
-                                deleteCh.Y -= deltaY < 0 ? -1 : 1;
-                                playerMove += ":" + convertPointToCheckerString(deleteCh.X, deleteCh.Y);
+                                _playerMove += ":" + ConvertPointToCheckerString(searchPoint.X, searchPoint.Y);
                                 if (logMove)
                                 {
-                                    this.Text = playerMove;
+                                    Text = _playerMove;
                                 }
-                                deleteChecker(deleteCh);
+                                DeleteChecker(searchPoint);
+                                break;
                             }
                         }
-                        break;
+                    }
+                    else
+                    {
+                        var deltaX = active.position.X - newPointForCh.X;
+                        var deltaY = active.position.Y - newPointForCh.Y;
+                        if (Math.Abs(deltaX) > 1 && Math.Abs(deltaY) > 1)
+                        {
+                            fightMove = true;
+                            active.fight = true;
+                            var deleteCh = new Point(active.position.X, active.position.Y);
+                            deleteCh.X -= deltaX < 0 ? -1 : 1;
+                            deleteCh.Y -= deltaY < 0 ? -1 : 1;
+                            _playerMove += ":" + ConvertPointToCheckerString(deleteCh.X, deleteCh.Y);
+                            if (logMove)
+                            {
+                                Text = _playerMove;
+                            }
+                            DeleteChecker(deleteCh);
+                        }
                     }
                 }
                 if (moveIsGood)
@@ -542,10 +475,10 @@ namespace Шашки
                     pictureBox1.Invalidate();
                     if (!fightMove)
                     {
-                        endMove(active);
-                    } else if (!fightChecker(active))
+                        EndMove(active);
+                    } else if (!FightChecker(active))
                     {
-                        endMove(active);
+                        EndMove(active);
                     }
                     else
                     {
@@ -562,80 +495,78 @@ namespace Шашки
         /// <summary>
         ///   Конец хода
         /// </summary>
-        private void endMove(Checker activeCh)
+        private void EndMove(Checker activeCh)
         {
             activeCh.click = false;
-            highlight = false;
+            _highlight = false;
             step = !step;
             String addString;
             if (activeCh.fight)
             {
-                addString = ":" + convertPointToCheckerString(activeCh.position.X, activeCh.position.Y);
+                addString = ":" + ConvertPointToCheckerString(activeCh.position.X, activeCh.position.Y);
             }
             else
             {
-                addString = convertPointToCheckerString(activeCh.position.X, activeCh.position.Y);
+                addString = ConvertPointToCheckerString(activeCh.position.X, activeCh.position.Y);
             }
-            playerMove += addString;
+            _playerMove += addString;
             activeCh.fight = false;
             if (logMove)
             {
-                this.Text = playerMove;
+                Text = _playerMove;
             }
 
 
-            if (withHuman == 0)
+            if (_withHuman == 0)
             {
                 //Если играем с комьютером передаем ему строку движения шашки
-                this.userMove(playerMove);
+                UserMove(_playerMove);
             }
 
-            Checker[] find = solveCheckers();
+            var find = SolveCheckers();
             if (find.Length == 0)
             {
-                gameEnded();
+                GameEnded();
             }
             else
             {
-                if (withHuman == 0)
+                if (_withHuman == 0)
                 {
-                    timerForComputerStep = new Timer();
-                    timerForComputerStep.Interval = 10;
-                    timerForComputerStep.Tick += new EventHandler(computerTimerElapsed);
-                    timerForComputerStep.Enabled = true;
+                    _timerForComputerStep = new Timer {Interval = 10};
+                    _timerForComputerStep.Tick += ComputerTimerElapsed;
+                    _timerForComputerStep.Enabled = true;
                 }
             }
         }
 
-        private Timer timerForComputerStep;
-        private void computerTimerElapsed(Object sender, EventArgs e)
+        private Timer _timerForComputerStep;
+        private void ComputerTimerElapsed(Object sender, EventArgs e)
         {
-            computerStep();
-            timerForComputerStep.Enabled = false;
+            ComputerStep();
+            _timerForComputerStep.Enabled = false;
         }
         /// <summary>
         ///   Восстанавливает все шашки на столе в default положение
         /// </summary>
-        private void resetAllCheckersOnBoard()
+        private void ResetAllCheckersOnBoard()
         {
-            for (int i = 0; i < checkerArray.Length; i++)
+            foreach (var ch in checkerArray)
             {
-                Checker ch = (Checker)checkerArray[i];
                 ch.setDefaultValue();
             }
-            this.createCheckers(0, 12, true);
-            this.createCheckers(12, 24, false);
+            CreateCheckers(0, 12, true);
+            CreateCheckers(12, 24, false);
         }
 
         /// <summary>
         ///   Игра окончена
         /// </summary>
-        private void gameEnded()
+        private void GameEnded()
         {
-            DialogResult result1 = MessageBox.Show("Вы проиграли.\nЖелаете начать новую игру?", "Игра окончена", MessageBoxButtons.YesNo);
+            var result1 = MessageBox.Show("Вы проиграли.\nЖелаете начать новую игру?", "Игра окончена", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
-                startNewGame(true);
+                StartNewGame(true);
             }
             else
             {
@@ -646,22 +577,22 @@ namespace Шашки
         /// <summary>
         ///   Начать новую игру
         /// </summary>
-        private void startNewGame(bool changeHuman)
+        private void StartNewGame(bool changeHuman)
         {
-            highlight = false;
+            _highlight = false;
             step = false;
             if (changeHuman)
             {
-                withHuman = Шашки.Properties.Settings.Default.Game_type;
+                _withHuman = Properties.Settings.Default.Game_type;
             }
-            resetAllCheckersOnBoard();
-            if (withHuman == 0) //с компьютером
+            ResetAllCheckersOnBoard();
+            if (_withHuman == 0) //с компьютером
             {
-                newGame();
-                if (Шашки.Properties.Settings.Default.Player1_color) //игрок ходит черными!!!
+                NewGame();
+                if (Properties.Settings.Default.Player1_color) //игрок ходит черными!!!
                 {
                     //делаем ход компьютера
-                    computerStep();
+                    ComputerStep();
                 }
             }
         }
@@ -670,43 +601,43 @@ namespace Шашки
         /// <summary>
         ///   Возвращает все возможные ходы для активной шашки на один ход
         /// </summary>
-        private Point[] getMovesOnOneMove()
+        private IEnumerable<Point> GetMovesOnOneMove()
         {
-            Checker active = this.getActiveChecker();
+            var active = GetActiveChecker();
             if (active == null)
             {
                 return null;
             }
-            bool down = false;
-            if (active.color == true)
+            var down = false;
+            if (active.color)
             {
                 down = true;
             }
-            ArrayList moveArray = new ArrayList(4);
-            Point activePoint = active.position;
+            var moveArray = new ArrayList(4);
+            var activePoint = active.position;
 
             if (active.king)
             {
-                for (int j = 0; j < 2; j++)
+                for (var j = 0; j < 2; j++)
                 {
-                    int deltaX = j == 0 ? -1 : 1; //сначала влево, потом вправо проверяем
-                    for (int k = 0; k < 2; k++)
+                    var deltaX = j == 0 ? -1 : 1; //сначала влево, потом вправо проверяем
+                    for (var k = 0; k < 2; k++)
                     {
-                        int deltaY = k == 0 ? -1 : 1; //вверх, потом вниз
-                        for (int i = 1; i < 9; i++)
+                        var deltaY = k == 0 ? -1 : 1; //вверх, потом вниз
+                        for (var i = 1; i < 9; i++)
                         {
-                            bool canKill = true;
-                            Checker ch = this.checkerFromPosition(new Point(activePoint.X + deltaX * i, activePoint.Y + deltaY * i)); //берем все шашки во всех направлениях
+                            var canKill = true;
+                            var ch = CheckerFromPosition(new Point(activePoint.X + deltaX * i, activePoint.Y + deltaY * i)); //берем все шашки во всех направлениях
                             if (ch != null)
                             {
                                 if (ch.color != active.color)
                                 {
                                     for (int l = 1; l < 8; l++) //проверяем все предполагаемые клетки за той, которую мы хотим "забрать"
                                     {
-                                        int xMove = activePoint.X + deltaX * (i + l);
-                                        int yMove = activePoint.Y + deltaY * (i + l);
-                                        Point killMove = new Point(xMove, yMove);
-                                        if (this.checkerFromPosition(killMove) == null && killMove.X > 0 && killMove.X < 9
+                                        var xMove = activePoint.X + deltaX * (i + l);
+                                        var yMove = activePoint.Y + deltaY * (i + l);
+                                        var killMove = new Point(xMove, yMove);
+                                        if (CheckerFromPosition(killMove) == null && killMove.X > 0 && killMove.X < 9
                                             && killMove.Y > 0 && killMove.Y < 9)  //значит можно бить шашку
                                         {
                                             moveArray.Add(killMove);
@@ -735,22 +666,21 @@ namespace Шашки
             else
             {
                 //сначала делаем проверку на то, а можем ли мы побить какую-нибуь шашку рядом
-                Checker[] chArray = new Checker[4];
-                chArray[0] = this.checkerFromPosition(new Point(activePoint.X - 1, activePoint.Y + 1)); //верхняя левая
-                chArray[1] = this.checkerFromPosition(new Point(activePoint.X + 1, activePoint.Y + 1)); //верхняя правая
-                chArray[2] = this.checkerFromPosition(new Point(activePoint.X - 1, activePoint.Y - 1)); //нижняя левая
-                chArray[3] = this.checkerFromPosition(new Point(activePoint.X + 1, activePoint.Y - 1)); //нижняя правая
-                for (int i = 0; i < chArray.Length; i++)
+                var chArray = new Checker[4];
+                chArray[0] = CheckerFromPosition(new Point(activePoint.X - 1, activePoint.Y + 1)); //верхняя левая
+                chArray[1] = CheckerFromPosition(new Point(activePoint.X + 1, activePoint.Y + 1)); //верхняя правая
+                chArray[2] = CheckerFromPosition(new Point(activePoint.X - 1, activePoint.Y - 1)); //нижняя левая
+                chArray[3] = CheckerFromPosition(new Point(activePoint.X + 1, activePoint.Y - 1)); //нижняя правая
+                foreach (Checker ch in chArray)
                 {
-                    Checker ch = chArray[i];
                     if (ch != null)
                     {
                         if (ch.color != active.color)//шашки разные
                         {
-                            int xMove = ch.position.X - active.position.X;
-                            int yMove = ch.position.Y - active.position.Y;
-                            Point killMove = new Point(ch.position.X + xMove, ch.position.Y + yMove);
-                            if (this.checkerFromPosition(killMove) == null && killMove.X > 0 && killMove.X < 9
+                            var xMove = ch.position.X - active.position.X;
+                            var yMove = ch.position.Y - active.position.Y;
+                            var killMove = new Point(ch.position.X + xMove, ch.position.Y + yMove);
+                            if (CheckerFromPosition(killMove) == null && killMove.X > 0 && killMove.X < 9
                                 && killMove.Y > 0 && killMove.Y < 9)  //значит можно бить шашку
                             {
                                 moveArray.Add(killMove);
@@ -776,14 +706,14 @@ namespace Шашки
                             int deltaY = k == 0 ? -1 : 1; //вверх, потом вниз
                             for (int i = 1; i < 9; i++)
                             {
-                                Point checkMove = new Point(activePoint.X + deltaX * i, activePoint.Y + deltaY * i);
+                                var checkMove = new Point(activePoint.X + deltaX * i, activePoint.Y + deltaY * i);
                                 if (checkMove.X < 1 || checkMove.X > 8 || checkMove.Y < 1 || checkMove.Y > 8)
                                 {
                                      checkMove.X = -1;
                                 }
                                 if (checkMove.X != -1)
                                 {
-                                    Checker ch = this.checkerFromPosition(checkMove); //ищем пустые клетки без шашек
+                                    var ch = CheckerFromPosition(checkMove); //ищем пустые клетки без шашек
                                     if (ch == null)
                                     {
                                         moveArray.Add(checkMove);
@@ -803,7 +733,7 @@ namespace Шашки
                 }
                 else
                 {
-                    int deltaY = 0;
+                    int deltaY;
                     if (down)
                     {
                         deltaY = -1;
@@ -812,17 +742,17 @@ namespace Шашки
                     {
                         deltaY = 1;
                     }
-                    for (int i = 0; i < 2; i++)
+                    for (var i = 0; i < 2; i++)
                     {
-                        int x = i == 0 ? active.position.X - 1 : active.position.X + 1;
-                        Point checkMove = new Point(x, active.position.Y + deltaY);
+                        var x = i == 0 ? active.position.X - 1 : active.position.X + 1;
+                        var checkMove = new Point(x, active.position.Y + deltaY);
                         if (checkMove.X < 1 || checkMove.X > 8 || checkMove.Y < 1 || checkMove.Y > 8)
                         {
                             checkMove.X = -1;
                         }
                         if (checkMove.X != -1)
                         {
-                            Checker findCh = checkerFromPosition(checkMove);
+                            var findCh = CheckerFromPosition(checkMove);
                             if (findCh == null)
                             {
                                 moveArray.Add(checkMove);
@@ -832,11 +762,11 @@ namespace Шашки
                 }
             }
 
-            Point[] retPoint = new Point[moveArray.Count];
-            for (int i = 0; i < moveArray.Count; i++)
+            var retPoint = new Point[moveArray.Count];
+            for (var i = 0; i < moveArray.Count; i++)
             {
-                Point addPoint = (Point)moveArray[i];
-                retPoint[i] = addPoint;
+                var addPoint = moveArray[i];
+                retPoint[i] = (Point) addPoint;
             }
             return retPoint;
         }
@@ -845,20 +775,20 @@ namespace Шашки
         /// <summary>
         ///   Вызывается при перерисовки стола
         /// </summary>
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        private void PictureBox1Paint(object sender, PaintEventArgs e)
         {
-            if (highlight && Шашки.Properties.Settings.Default.HighlightedMove)
+            if (_highlight && Properties.Settings.Default.HighlightedMove)
             {  
-                Checker active = this.getActiveChecker();
+                Checker active = GetActiveChecker();
 
                 if (null != active)
                 {
                     //int startX = active.Location.X;
                     //int startY = active.Location.Y;
-                    Point[] moveArray = this.getMovesOnOneMove();
-                    foreach (Point drawRectPoint in moveArray)
+                    var moveArray = GetMovesOnOneMove();
+                    foreach (var drawRectPoint in moveArray)
                     {
-                        drawRect(drawRectPoint);
+                        DrawRect(drawRectPoint);
                     }                       
                 }
             }
@@ -868,40 +798,39 @@ namespace Шашки
         /// <summary>
         ///   Рисует зеленый квадрат по заданной точке
         /// </summary>
-        private void drawRect(Point startPosition)
+        private void DrawRect(Point startPosition)
         {
-            int x = (startPosition.X - 1) * 50;
-            int y = (8 - startPosition.Y) * 50;
-            int wight = 50;
-            int height = 50;
+            var x = (startPosition.X - 1) * 50;
+            var y = (8 - startPosition.Y) * 50;
+            const int wight = 50;
+            const int height = 50;
 
             Graphics g = pictureBox1.CreateGraphics();
 
-            Rectangle drawRectangle = new Rectangle(x,y,wight,height);
-            Pen drawPen = new Pen(Color.Green);
+            var drawRectangle = new Rectangle(x,y,wight,height);
 
             g.FillRectangle(Brushes.Green, drawRectangle);
         }
 
-        private Point getPointOnPosition(int x, int y)
+        private static Point GetPointOnPosition(int x, int y)
         {
-            int newX = x / 50;
-            int newY = y / 50;
+            var newX = x / 50;
+            var newY = y / 50;
             return new Point(newX, newY);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1Click(object sender, EventArgs e)
         {
-            this.newGame();
+            NewGame();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private static void Button2Click(object sender, EventArgs e)
         {
-           this.computerStep();
+           ComputerStep();
 
         }
 
-        private void файлToolStripMenuItem_Click(object sender, EventArgs e)
+        private static void ФайлToolStripMenuItemClick(object sender, EventArgs e)
         {
 
         }
@@ -909,7 +838,7 @@ namespace Шашки
         /// <summary>
         ///   Метод, который выполняет ход компьютера
         /// </summary>
-        private void computerStep()
+        private static void ComputerStep()
         {
             EI_SetTime(1 * 100, 1000); //5 * 1000 миллисекунд свое время   1000 противника
             EI_Think();
@@ -918,24 +847,24 @@ namespace Шашки
         /// <summary>
         ///   Создание новой игры в движке
         /// </summary>
-        private void newGame()
+        partial void NewGame()
         {
             EI_NewGame();
-            EI_Initialization(method, (int)16384); //2^14
-            EI_SetTimeControl((int)24 * 60, 0); //24 * 60 минут на партию   0 - бонус за ход
+            EI_Initialization(method, 16384); //2^14
+            EI_SetTimeControl(24 * 60, 0); //24 * 60 минут на партию   0 - бонус за ход
         }
 
 
         /// <summary>
         ///   Меняет позицию шашки
         /// </summary>
-        public void moveChecker(Point fromPoint, Point toPoint)
+        public void MoveChecker(Point fromPoint, Point toPoint)
         {
             if (fromPoint.X == toPoint.X & fromPoint.Y == toPoint.Y)
             {
                 return;
             }
-            foreach (Checker ch in checkerArray)
+            foreach (var ch in checkerArray)
             {
                 if (ch.position == fromPoint)
                 {
@@ -960,9 +889,9 @@ namespace Шашки
                             }
                         }
                     }
-                    ch.Location = new Point((ch.position.X - 1) * 50,  (8 - ch.position.Y) * 50);
+                    ch.Location = new Point((ch.position.X - 1)*50, (8 - ch.position.Y)*50);
                     ch.click = false;
-                    highlight = false;
+                    _highlight = false;
                     pictureBox1.Invalidate();
 
                     break;
@@ -974,9 +903,9 @@ namespace Шашки
         /// <summary>
         ///   Убирает шашку со стола
         /// </summary>
-        public void deleteChecker(Point deletePoint)
+        public void DeleteChecker(Point deletePoint)
         {
-            foreach (Checker ch in checkerArray)
+            foreach (var ch in checkerArray)
             {
                 if (ch.position == deletePoint)
                 {
@@ -992,7 +921,7 @@ namespace Шашки
         /// <summary>
         ///   Делает действия на доске по строке хода (используется при ходе компьютера)
         /// </summary>
-        public static void moveFromString(string move)
+        public static void MoveFromString(string move)
         {
             //a - 97   
             //b - 98   
@@ -1022,10 +951,10 @@ namespace Шашки
                     char moveToLetter = words[words.Length - 1][0];
                     char moveToNumber = words[words.Length - 1][1];
 
-                    int numberFromVertical = (int)moveFromLetter - 96;
-                    int numberFromHorizontal = (int)moveFromNumber - 48;
+                    int numberFromVertical = moveFromLetter - 96;
+                    int numberFromHorizontal = moveFromNumber - 48;
 
-                    Point fromPoint = new Point(numberFromVertical, numberFromHorizontal);
+                    var fromPoint = new Point(numberFromVertical, numberFromHorizontal);
 
                     for (int j = 1; j < words.Length - 1; j++)
                     {
@@ -1034,23 +963,23 @@ namespace Шашки
                         char deleteLetter = deleteChStr[0];
                         char deleteNumber = deleteChStr[1];
 
-                        int numberDeleteVertical = (int)deleteLetter - 96;
-                        int numberDeleteHorizontal = (int)deleteNumber - 48;
+                        int numberDeleteVertical = deleteLetter - 96;
+                        int numberDeleteHorizontal = deleteNumber - 48;
 
-                        Point deletePoint = new Point(numberDeleteVertical, numberDeleteHorizontal);
-                        Point newToPoint = new Point(deletePoint.X + (deletePoint.X - fromPoint.X), deletePoint.Y + (deletePoint.Y - fromPoint.Y));
+                        var deletePoint = new Point(numberDeleteVertical, numberDeleteHorizontal);
+                        var newToPoint = new Point(deletePoint.X + (deletePoint.X - fromPoint.X), deletePoint.Y + (deletePoint.Y - fromPoint.Y));
                        // realForm.moveChecker(fromPoint, toPoint);
-                        realForm.deleteChecker(deletePoint);
-                        realForm.moveChecker(fromPoint, newToPoint);
+                        _realForm.DeleteChecker(deletePoint);
+                        _realForm.MoveChecker(fromPoint, newToPoint);
                         fromPoint = newToPoint;
                     }
 
                    
                     
-                    int numberToVertical = (int)moveToLetter - 96;
-                    int numberToHorizontal = (int)moveToNumber - 48;
-                    Point toPoint = new Point(numberToVertical, numberToHorizontal);
-                    realForm.moveChecker(fromPoint, toPoint);
+                    int numberToVertical = moveToLetter - 96;
+                    int numberToHorizontal = moveToNumber - 48;
+                    var toPoint = new Point(numberToVertical, numberToHorizontal);
+                    _realForm.MoveChecker(fromPoint, toPoint);
                     
                     i = move.Length;
                     
@@ -1060,26 +989,26 @@ namespace Шашки
                     char moveToLetter = move[i + 2];
                     char moveToNumber = move[i + 3];
 
-                    int numberFromVertical = (int)moveFromLetter - 96;
-                    int numberFromHorizontal = (int)moveFromNumber - 48;
+                    int numberFromVertical = moveFromLetter - 96;
+                    int numberFromHorizontal = moveFromNumber - 48;
 
-                    int numberToVertical = (int)moveToLetter - 96 ;
-                    int numberToHorizontal = (int)moveToNumber - 48;
+                    int numberToVertical = moveToLetter - 96 ;
+                    int numberToHorizontal = moveToNumber - 48;
 
-                    Point fromPoint = new Point(numberFromVertical, numberFromHorizontal);
-                    Point toPoint = new Point(numberToVertical, numberToHorizontal);
+                    var fromPoint = new Point(numberFromVertical, numberFromHorizontal);
+                    var toPoint = new Point(numberToVertical, numberToHorizontal);
 
-                    realForm.moveChecker(fromPoint, toPoint);
+                    _realForm.MoveChecker(fromPoint, toPoint);
                     i += 4;
                 }
             }
 
 
-            realForm.step = !realForm.step;
-            Checker[] find = realForm.solveCheckers();
+            _realForm.step = !_realForm.step;
+            Checker[] find = _realForm.SolveCheckers();
             if (find.Length == 0)
             {
-                realForm.gameEnded();
+                _realForm.GameEnded();
             }
             
 
@@ -1090,29 +1019,24 @@ namespace Шашки
         ///   Передача строки движения движку
         /// </summary>
         //Дописать!!!
-        private void userMove(string move)
+        private static void UserMove(string move)
         {
             EI_MakeMove(move);
-            //StringBuilder moveBuilder = new StringBuilder(move);
-            //EI_MakeMove(moveBuilder, moveBuilder.Length);
-            //EI_MakeMoveString(move);
-            //Transfer(move);
-            
         }
 
 
         /// <summary>
         ///   Метод получающий данные из движка
         /// </summary>
-        static void seacrResultDelegate(int score, int depth, int speed, StringBuilder pv, StringBuilder cm)
+        static void SeacrResultDelegate(int score, int depth, int speed, StringBuilder pv, StringBuilder cm)
         {
             if (score == depth && depth == speed && speed == 123) //ход делает компьютер
             {
                 string moveString = pv.ToString();
-                Form1.moveFromString(moveString);
-                if (realForm.logMove)
+                MoveFromString(moveString);
+                if (_realForm.logMove)
                 {
-                    realForm.Text = moveString;
+                    _realForm.Text = moveString;
                 } 
             }
             else
@@ -1120,44 +1044,52 @@ namespace Шашки
             {
                 string moveString = pv.ToString();
                 MessageBox.Show(moveString);
-                if (realForm.logMove)
+                if (_realForm.logMove)
                 {
-                    realForm.Text = moveString;
+                    _realForm.Text = moveString;
                 }
             }
-            else if (realForm.logMove)
+            else if (_realForm.logMove)
             {
-                Form1.ActiveForm.Text = "score = " + score.ToString() + " depth = " + depth.ToString() + " speed = " + speed.ToString()
-                + " pv = " + pv.ToString();
+                if (ActiveForm != null)
+                    ActiveForm.Text = "score = " + score.ToString() + " depth = " + depth.ToString() + " speed = " + speed.ToString()
+                                      + " pv = " + pv.ToString();
             }
             
         }
 
-        private void новаяИграToolStripMenuItem_Click(object sender, EventArgs e)
+        private static void НоваяИграToolStripMenuItemClick(object sender, EventArgs e)
         {
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3Click(object sender, EventArgs e)
         {
-            gameEnded();
+            GameEnded();
         }
 
-        private void сКомпьютеромToolStripMenuItem_Click(object sender, EventArgs e)
+        private void СКомпьютеромToolStripMenuItemClick(object sender, EventArgs e)
         {
-            withHuman = 0;
-            Шашки.Properties.Settings.Default.Game_type = withHuman;
-            Шашки.Properties.Settings.Default.Save();
-            startNewGame(false);
+            _withHuman = 0;
+            Properties.Settings.Default.Game_type = _withHuman;
+            Properties.Settings.Default.Save();
+            StartNewGame(false);
         }
 
-        private void сЧеловекомToolStripMenuItem_Click(object sender, EventArgs e)
+        private void СЧеловекомToolStripMenuItemClick(object sender, EventArgs e)
         {
-            withHuman = 1;
-            Шашки.Properties.Settings.Default.Game_type = withHuman;
-            Шашки.Properties.Settings.Default.Save();
-            startNewGame(false);
+            _withHuman = 1;
+            Properties.Settings.Default.Game_type = _withHuman;
+            Properties.Settings.Default.Save();
+            StartNewGame(false);
         }
 
+        /// <summary>
+        ///   Конвертирует позицию в строку для передачи движку
+        /// </summary>
+        private static string ConvertPointToCheckerString(int x, int y)
+        {
+            return (Convert.ToChar(97 + x - 1) + Convert.ToChar(48 + y).ToString());
+        }
     }
 }
