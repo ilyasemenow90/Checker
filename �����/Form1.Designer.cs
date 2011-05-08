@@ -76,6 +76,7 @@ namespace Шашки
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.какИгратьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.статистикаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -429,6 +430,7 @@ namespace Шашки
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.новаяИграToolStripMenuItem,
             this.сдатьсяToolStripMenuItem,
+            this.статистикаToolStripMenuItem,
             this.toolStripMenuItem2,
             this.настройкиToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -504,15 +506,22 @@ namespace Шашки
             // какИгратьToolStripMenuItem
             // 
             this.какИгратьToolStripMenuItem.Name = "какИгратьToolStripMenuItem";
-            this.какИгратьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.какИгратьToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.какИгратьToolStripMenuItem.Text = "Как играть?";
             // 
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItemClick);
+            // 
+            // статистикаToolStripMenuItem
+            // 
+            this.статистикаToolStripMenuItem.Name = "статистикаToolStripMenuItem";
+            this.статистикаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.статистикаToolStripMenuItem.Text = "Статистика";
+            this.статистикаToolStripMenuItem.Click += new System.EventHandler(this.статистикаToolStripMenuItemClick);
             // 
             // Form1
             // 
@@ -630,6 +639,8 @@ namespace Шашки
         ///   Создание новой игры в движке
         /// </summary>
         partial void newGame();
+
+        private System.Windows.Forms.ToolStripMenuItem статистикаToolStripMenuItem;
     }
 }
 

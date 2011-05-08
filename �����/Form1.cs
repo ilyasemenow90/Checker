@@ -1101,5 +1101,11 @@ namespace Шашки
         {
             Close();
         }
+
+        private void статистикаToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var addForm = new Statistic();
+            addForm.ShowDialog(this);
+        }
     }
 }

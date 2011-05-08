@@ -9,21 +9,21 @@
   </SettingsComponent>
   <CompletionStatisticsManager>
     <ItemStatistics item="Default">
-      <Item value="public" priority="1" />
+      <Item value="public" priority="3" />
       <Item value="var" priority="9" />
       <Item value="private" priority="0" />
-      <Item value="void" priority="1" />
+      <Item value="void" priority="3" />
       <Item value="Close`0" priority="2" />
       <Item value="Properties" priority="0" />
       <Item value="Settings`0" priority="0" />
-      <Item value="if" priority="4" />
+      <Item value="if" priority="6" />
       <Item value="radioButton1" priority="0" />
       <Item value="RadioButton`0" priority="0" />
       <Item value="else" priority="2" />
       <Item value="null" priority="0" />
       <Item value="radioButton" priority="0" />
       <Item value="FormSettings`0" priority="0" />
-      <Item value="new" priority="1" />
+      <Item value="new" priority="3" />
       <Item value="FormSettings" priority="0" />
       <Item value="newForm" priority="0" />
       <Item value="startNewGame`0" priority="0" />
@@ -39,6 +39,13 @@
       <Item value="progressBar1" priority="0" />
       <Item value="LoadForm`0" priority="0" />
       <Item value="this" priority="0" />
+      <Item value="static" priority="0" />
+      <Item value="Database`0" priority="0" />
+      <Item value="Database" priority="0" />
+      <Item value="return" priority="0" />
+      <Item value="dataObject" priority="0" />
+      <Item value="value" priority="0" />
+      <Item value="Statistic`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Шашки.Properties.Settings">
       <Item value="Default" priority="1" />
@@ -76,51 +83,56 @@
       <Item value="Validated" priority="0" />
       <Item value="Maximum" priority="0" />
     </ItemStatistics>
+    <ItemStatistics item="Qualified:Шашки.Statistic">
+      <Item value="ShowDialog`0" priority="0" />
+    </ItemStatistics>
   </CompletionStatisticsManager>
   <RecentFiles>
     <RecentFiles>
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:WhomToPlay.cs" caret="204" fromTop="11" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:WhomToPlay.Designer.cs" caret="712" fromTop="0" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.Designer.cs" caret="8664" fromTop="169" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="2240" fromTop="19" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.Designer.cs" caret="8711" fromTop="169" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.Designer.cs" caret="966" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Settings.cs" caret="0" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:AboutBox1.cs" caret="694" fromTop="0" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="40827" fromTop="16" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Program.cs" caret="466" fromTop="12" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:LoadForm.cs" caret="13" fromTop="0" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Program.cs" caret="466" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1187" fromTop="10" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="802" fromTop="20" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="262" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="41113" fromTop="16" />
     </RecentFiles>
     <RecentEdits>
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1525" fromTop="11" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1533" fromTop="13" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1631" fromTop="17" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.Designer.cs" caret="8664" fromTop="169" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1175" fromTop="22" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="2143" fromTop="21" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="29858" fromTop="11" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1346" fromTop="6" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="2240" fromTop="19" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="1939" fromTop="8" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="21141" fromTop="15" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="417" fromTop="14" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31467" fromTop="15" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="31150" fromTop="12" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="29900" fromTop="12" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="30874" fromTop="9" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="39025" fromTop="14" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="1859" fromTop="11" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="20501" fromTop="11" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="2292" fromTop="19" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.Designer.cs" caret="30130" fromTop="0" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.Designer.cs" caret="30706" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:AboutBox1.cs" caret="2510" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:AboutBox1.cs" caret="3438" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="40864" fromTop="16" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="40925" fromTop="16" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:LoadForm.cs" caret="228" fromTop="5" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Program.cs" caret="466" fromTop="12" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:LoadForm.cs" caret="506" fromTop="15" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:LoadForm.cs" caret="13" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:LoadForm.cs" caret="586" fromTop="0" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="2292" fromTop="19" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1196" fromTop="10" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="237" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="237" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="237" fromTop="20" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="237" fromTop="9" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="545" fromTop="14" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="293" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="662" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="802" fromTop="20" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="825" fromTop="20" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="41115" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="0" fromTop="0" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="262" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="360" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="41092" fromTop="13" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
