@@ -17,8 +17,6 @@ C:\Users\Lexus\Desktop\Диплом Буся\Шашки\Шашки\obj\x86\Debug
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.exe.config
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.exe
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.pdb
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.exe.manifest
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.application
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.exe
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.pdb
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\ResolveAssemblyReference.cache
@@ -27,7 +25,6 @@ C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.Form1.
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.Properties.Resources.resources
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\GenerateResource.write.1.tlog
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.TrustInfo.xml
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.exe.manifest
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.application
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.WhomToPlay.resources
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.FormSettings.resources
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.LoadForm.resources

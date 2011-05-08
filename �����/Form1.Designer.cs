@@ -76,9 +76,6 @@ namespace Шашки
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.какИгратьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -93,8 +90,8 @@ namespace Шашки
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox1Paint);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseUp);
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1Paint);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1MouseUp);
             // 
             // label3
             // 
@@ -439,7 +436,7 @@ namespace Шашки
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.файлToolStripMenuItem.Text = "Игра";
-            this.файлToolStripMenuItem.Click += new System.EventHandler(ФайлToolStripMenuItemClick);
+            this.файлToolStripMenuItem.Click += new System.EventHandler(this.файлToolStripMenuItemClick);
             // 
             // новаяИграToolStripMenuItem
             // 
@@ -449,21 +446,21 @@ namespace Шашки
             this.новаяИграToolStripMenuItem.Name = "новаяИграToolStripMenuItem";
             this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.новаяИграToolStripMenuItem.Text = "Новая игра";
-            this.новаяИграToolStripMenuItem.Click += new System.EventHandler(НоваяИграToolStripMenuItemClick);
+            this.новаяИграToolStripMenuItem.Click += new System.EventHandler(this.новаяИграToolStripMenuItemClick);
             // 
             // сКомпьютеромToolStripMenuItem
             // 
             this.сКомпьютеромToolStripMenuItem.Name = "сКомпьютеромToolStripMenuItem";
             this.сКомпьютеромToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.сКомпьютеромToolStripMenuItem.Text = "С компьютером";
-            this.сКомпьютеромToolStripMenuItem.Click += new System.EventHandler(this.СКомпьютеромToolStripMenuItemClick);
+            this.сКомпьютеромToolStripMenuItem.Click += new System.EventHandler(this.сКомпьютеромToolStripMenuItemClick);
             // 
             // сЧеловекомToolStripMenuItem
             // 
             this.сЧеловекомToolStripMenuItem.Name = "сЧеловекомToolStripMenuItem";
             this.сЧеловекомToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.сЧеловекомToolStripMenuItem.Text = "С человеком";
-            this.сЧеловекомToolStripMenuItem.Click += new System.EventHandler(this.СЧеловекомToolStripMenuItemClick);
+            this.сЧеловекомToolStripMenuItem.Click += new System.EventHandler(this.сЧеловекомToolStripMenuItemClick);
             // 
             // сдатьсяToolStripMenuItem
             // 
@@ -481,6 +478,7 @@ namespace Шашки
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.настройкиToolStripMenuItem.Text = "Настройки";
+            this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItemClick);
             // 
             // toolStripMenuItem1
             // 
@@ -492,6 +490,7 @@ namespace Шашки
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.выходToolStripMenuItem.Text = "Выход";
+            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItemClick);
             // 
             // справкаToolStripMenuItem
             // 
@@ -505,44 +504,15 @@ namespace Шашки
             // какИгратьToolStripMenuItem
             // 
             this.какИгратьToolStripMenuItem.Name = "какИгратьToolStripMenuItem";
-            this.какИгратьToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.какИгратьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.какИгратьToolStripMenuItem.Text = "Как играть?";
             // 
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(566, 97);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(105, 42);
-            this.button1.TabIndex = 36;
-            this.button1.Text = "начать новую игру";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(566, 146);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(105, 50);
-            this.button2.TabIndex = 37;
-            this.button2.Text = "Сделать ход противника";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(Button2Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(566, 202);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(105, 50);
-            this.button3.TabIndex = 38;
-            this.button3.Text = "Окончить игру";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.Button3Click);
+            this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItemClick);
             // 
             // Form1
             // 
@@ -550,9 +520,6 @@ namespace Шашки
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(850, 579);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label27);
@@ -591,7 +558,8 @@ namespace Шашки
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Игра шашки";
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
+            this.Shown += new System.EventHandler(this.form1Load);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.form1MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -641,16 +609,13 @@ namespace Шашки
         private System.Windows.Forms.ToolStripMenuItem какИгратьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem новаяИграToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сдатьсяToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStripMenuItem сКомпьютеромToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сЧеловекомToolStripMenuItem;
-        private System.Windows.Forms.Button button3;
         private Checker[] checkerArray;  //массив шашек
 
         /// <summary>
@@ -659,12 +624,12 @@ namespace Шашки
         private bool step;
 
         private bool logMove; //отображать ходы в подписи формы?
-        private static PfSearchInfo method = new PfSearchInfo(Form1.SeacrResultDelegate);
+        private static PfSearchInfo method = new PfSearchInfo(Form1.seacrResultDelegate);
 
         /// <summary>
         ///   Создание новой игры в движке
         /// </summary>
-        partial void NewGame();
+        partial void newGame();
     }
 }
 

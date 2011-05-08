@@ -154,5 +154,21 @@ namespace Шашки.Properties {
                 this["FirstStart"] = value;
             }
         }
+        
+        /// <summary>
+        /// Уровень сложности 0-2
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Уровень сложности 0-2")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string Difficult {
+            get {
+                return ((string)(this["Difficult"]));
+            }
+            set {
+                this["Difficult"] = value;
+            }
+        }
     }
 }

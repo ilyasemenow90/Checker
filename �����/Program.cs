@@ -15,6 +15,7 @@ namespace Шашки
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new LoadForm());
             Application.Run(new Form1());
         }
     }
