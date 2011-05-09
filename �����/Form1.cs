@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -12,10 +13,45 @@ namespace Шашки
 {
     public partial class Form1 : Form
     {
-        bool _highlight;  //подсвечивать возможные ходы?
+        private const string helpFilePath = "help.chm";
+        /// <summary>
+        /// Подсвечивать возможные ходы?
+        /// </summary>
+        bool _highlight;
+
+        /// <summary>
+        /// Ход игрока в строке
+        /// </summary>
         string _playerMove;
+
+
+        /// <summary>
+        /// 0 - с компьютером
+        /// </summary>
         int _withHuman;
+
+
+        /// <summary>
+        /// 0-2 сложность компьютера
+        /// </summary>
         static int _computerHard;
+
+
+        /// <summary>
+        /// Время игры в секундах
+        /// </summary>
+        private int _timeGame;
+
+
+        /// <summary>
+        /// False - нижние не столе
+        /// </summary>
+        private bool _playerColor;
+
+        /// <summary>
+        /// Означает началась ли игра
+        /// </summary>
+        private bool _gameStarted;
 
         [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
         static extern void EI_MakeMove(string move);
@@ -59,6 +95,7 @@ namespace Шашки
         {
             InitializeComponent();
 
+            _timeGame = 0;
             logMove = false;
 
             _highlight = false;
@@ -71,11 +108,6 @@ namespace Шашки
             createCheckers(0, 12, true);
             createCheckers(12, 24, false);
             realForm = this;
-
-            if (!Properties.Settings.Default.FirstStart)
-            { 
-                startNewGame(true); 
-            }
             
         }
 
@@ -295,9 +327,18 @@ namespace Шашки
         /// </summary>
         private void pictureBoxClick(object sender, EventArgs e)
         {
+            if (!_gameStarted)
+            {
+                return;
+            }
+            if (!timer1.Enabled)
+            {
+                timer1.Enabled = true;
+                сдатьсяToolStripMenuItem.Enabled = true;
+            }
             if (_withHuman == 0)
             {
-                if (Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+                if (_playerColor && !step) //игрок ходит черными!!!
                 {
                     return;
                 }
@@ -375,9 +416,13 @@ namespace Шашки
         /// </summary>
         private void pictureBox1MouseUp(object sender, MouseEventArgs e)
         {
+            if (!_gameStarted)
+            {
+                return;
+            }
             if (_withHuman == 0)
             {
-                if (Properties.Settings.Default.Player1_color && !step) //игрок ходит черными!!!
+                if (_playerColor && !step) //игрок ходит черными!!!
                 {
                     return;
                 }
@@ -555,15 +600,110 @@ namespace Шашки
         /// </summary>
         private void gameEnded()
         {
-            var result1 = MessageBox.Show("Вы проиграли.\nЖелаете начать новую игру?", "Игра окончена", MessageBoxButtons.YesNo);
+            _gameStarted = false;
+            string newString;
+            timer1.Enabled = false;
+            сдатьсяToolStripMenuItem.Enabled = false;
+            bool firstPlayerWin = false;
+            if (_withHuman == 0) //играем с компьютером
+            {
+                if (!_playerColor)
+                {
+                    if (!step)
+                    {
+                        newString = "Вы проиграли";
+                    }
+                    else
+                    {
+                        firstPlayerWin = true;
+                        newString = "Вы победили";
+                    }
+                }
+                else
+                {
+                    if (step)
+                    {
+                        newString = "Вы проиграли";
+                    }
+                    else
+                    {
+                        firstPlayerWin = true;
+                        newString = "Вы победили";
+                    }
+                }
+                
+            }
+            else
+            {
+                if (!_playerColor)
+                {
+                    if (!step)
+                    {
+                        newString = "Игрок 2 победил";
+                    }
+                    else
+                    {
+                        firstPlayerWin = true;
+                        newString = "Игрок 1 победил";
+                    }
+                } else
+                {
+                    if (step)
+                    {
+                        newString = "Игрок 2 победил";
+                    }
+                    else
+                    {
+                        firstPlayerWin = true;
+                        newString = "Игрок 1 победил";
+                    }
+                }
+                
+            }
+            
+            //this.
+            if (_withHuman == 0) //с компьютером
+            {
+                Database.Instance.saveGameData(_withHuman, @"Игрок1", @"Computer", _timeGame, firstPlayerWin,
+                                               _computerHard);
+            }
+            else
+            {
+                string playerOneName = Properties.Settings.Default.Player1;
+                string playerTwoName = Properties.Settings.Default.Player2;
+                Database.Instance.saveGameData(_withHuman, playerOneName, playerTwoName, _timeGame, firstPlayerWin,
+                                               -1);
+            }
+            newString = string.Format("{0}\nЖелаете начать новую игру?",newString);
+            var result1 = MessageBox.Show(newString, @"Игра окончена", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
                 startNewGame(true);
             }
             else
             {
-
+                resetAllGameValueToDefaullt(true);
+                resetAllCheckersOnBoard();
+                _gameStarted = false;
             }
+            
+        }
+
+        private void resetAllGameValueToDefaullt(bool loadProperties)
+        {
+            _highlight = false;
+            step = false;
+            _timeGame = 0;
+            timer1.Enabled = false;
+            сдатьсяToolStripMenuItem.Enabled = false;
+            timerLabel.Text = @"00:00";
+            _gameStarted = true;
+            if (loadProperties)
+            {
+                _withHuman = Properties.Settings.Default.Game_type;
+                _computerHard = Properties.Settings.Default.HardLevel;
+                _playerColor = Properties.Settings.Default.Player1_color;
+            } 
         }
 
         /// <summary>
@@ -571,22 +711,26 @@ namespace Шашки
         /// </summary>
         private void startNewGame(bool changeHuman)
         {
-            _highlight = false;
-            step = false;
-            if (changeHuman)
-            {
-                _withHuman = Properties.Settings.Default.Game_type;
-                _computerHard = Properties.Settings.Default.HardLevel;
-            }
+            resetAllGameValueToDefaullt(changeHuman);
             resetAllCheckersOnBoard();
             if (_withHuman == 0) //с компьютером
             {
                 newGame();
-                if (Properties.Settings.Default.Player1_color) //игрок ходит черными!!!
+                if (_playerColor) //игрок ходит черными!!!
                 {
                     //делаем ход компьютера
+                    timer1.Enabled = true;
+                    сдатьсяToolStripMenuItem.Enabled = true;
+                    _gameStarted = true;
                     computerStep();
                 }
+            }
+            else
+            {
+                var newFormFirst = new InsertPlayerNameForm(1);
+                var newFormSecond = new InsertPlayerNameForm(2);
+                newFormFirst.ShowDialog();
+                newFormSecond.ShowDialog();
             }
         }
 
@@ -1033,8 +1177,7 @@ namespace Шашки
             else if (realForm.logMove)
             {
                 if (ActiveForm != null)
-                    ActiveForm.Text = "score = " + score.ToString() + " depth = " + depth.ToString() + " speed = " + speed.ToString()
-                                      + " pv = " + pv.ToString();
+                    ActiveForm.Text = string.Format("score = {0} depth = {1} speed = {2} pv = {3}", score, depth, speed, pv);
             }
             
         }
@@ -1049,7 +1192,7 @@ namespace Шашки
             _withHuman = 0;
             Properties.Settings.Default.Game_type = _withHuman;
             Properties.Settings.Default.Save();
-            startNewGame(false);
+            startNewGame(true);
         }
 
         private void сЧеловекомToolStripMenuItemClick(object sender, EventArgs e)
@@ -1057,7 +1200,7 @@ namespace Шашки
             _withHuman = 1;
             Properties.Settings.Default.Game_type = _withHuman;
             Properties.Settings.Default.Save();
-            startNewGame(false);
+            startNewGame(true);
         }
 
         /// <summary>
@@ -1106,6 +1249,152 @@ namespace Шашки
         {
             var addForm = new Statistic();
             addForm.ShowDialog(this);
+        }
+
+        private void timer1Tick(object sender, EventArgs e)
+        {
+            _timeGame += 1;
+            setTimeGameLabelValue();
+        }
+
+        private void setTimeGameLabelValue()
+        {
+            int day = _timeGame > 86399 ? _timeGame / 86400 : 0;
+            int hour = _timeGame > 3599 ? (_timeGame - (day * 86400)) / 3600 : 0;
+            int minute = _timeGame > 59 ? (_timeGame - (hour * 3600) - (day * 86400)) / 60 : 0;
+            int second = _timeGame -(day * 86400) - (hour * 3600) - (minute * 60);
+
+            string dayStr = day.ToString();
+            dayStr = dayStr.Length == 1 ? "0" + dayStr : dayStr;
+
+            string hourStr = hour.ToString();
+            hourStr = hourStr.Length == 1 ? "0" + hourStr : hourStr;
+
+            string minuteStr = minute.ToString();
+            minuteStr = minuteStr.Length == 1 ? "0" + minuteStr : minuteStr;
+
+            string secondStr = second.ToString();
+            secondStr = secondStr.Length == 1 ? "0" + secondStr : secondStr;
+
+            if (day > 0)
+            {
+                timerLabel.Text = string.Format("{0}:{1}:{2}:{3}", dayStr, hourStr, minuteStr, secondStr);
+            }
+            else if (hour > 0)
+            {
+                timerLabel.Text = string.Format("{0}:{1}:{2}", hourStr, minuteStr, secondStr);
+            } else
+            {
+                timerLabel.Text = string.Format("{0}:{1}", minuteStr, secondStr);
+            }
+        }
+
+        /// <summary>
+        /// Вызывается когда нажимается на стол (для запуска таймера)
+        /// </summary>
+        private void pictureBox1MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_gameStarted && !timer1.Enabled)
+            {
+                timer1.Enabled = true;
+                сдатьсяToolStripMenuItem.Enabled = true;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_withHuman == 0) //с компьютером
+            {
+                Database.Instance.saveGameData(_withHuman, @"Игрок1", @"Computer", _timeGame, false,
+                                               _computerHard);
+            }
+            else
+            {
+                string playerOneName = Properties.Settings.Default.Player1;
+                string playerTwoName = Properties.Settings.Default.Player2;
+                Database.Instance.saveGameData(_withHuman, playerOneName, playerTwoName, _timeGame, false,
+                                               -1);
+            }
+        }
+
+        private void какИгратьToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (File.Exists(helpFilePath))
+            {
+                Help.ShowHelp(this, helpFilePath);
+            }
+            
+        }
+
+        private void сдатьсяToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            const string addStr = @"Вы уверены, что хотите сдаться? В текущей партии вам будет зачислено поражение";
+            var result1 = MessageBox.Show(addStr, @"Сдаться", MessageBoxButtons.YesNo);
+            if (result1 == DialogResult.Yes)
+            {
+                _gameStarted = false;
+                string newString;
+                timer1.Enabled = false;
+                сдатьсяToolStripMenuItem.Enabled = false;
+                bool firstPlayerWin = false;
+                if (_withHuman == 0) //играем с компьютером
+                {
+                        newString = "Вы проиграли";
+                }
+                else
+                {
+                    if (!_playerColor)
+                    {
+                        if (!step)
+                        {
+                            newString = "Игрок 2 победил";
+                        }
+                        else
+                        {
+                            firstPlayerWin = true;
+                            newString = "Игрок 1 победил";
+                        }
+                    }
+                    else
+                    {
+                        if (step)
+                        {
+                            newString = "Игрок 2 победил";
+                        }
+                        else
+                        {
+                            firstPlayerWin = true;
+                            newString = "Игрок 1 победил";
+                        }
+                    }
+
+                }
+
+                if (_withHuman == 0) //с компьютером
+                {
+                    Database.Instance.saveGameData(_withHuman, @"Игрок1", @"Computer", _timeGame, firstPlayerWin,
+                                                   _computerHard);
+                }
+                else
+                {
+                    string playerOneName = Properties.Settings.Default.Player1;
+                    string playerTwoName = Properties.Settings.Default.Player2;
+                    Database.Instance.saveGameData(_withHuman, playerOneName, playerTwoName, _timeGame, firstPlayerWin,
+                                                   -1);
+                }
+                newString = string.Format("{0}\nЖелаете начать новую игру?", newString);
+                var result2 = MessageBox.Show(newString, @"Игра окончена", MessageBoxButtons.YesNo);
+                if (result2 == DialogResult.Yes)
+                {
+                    startNewGame(true);
+                }
+                else
+                {
+                    resetAllGameValueToDefaullt(true);
+                    resetAllCheckersOnBoard();
+                    _gameStarted = false;
+                }
+            }
         }
     }
 }

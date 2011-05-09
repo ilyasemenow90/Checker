@@ -29,3 +29,4 @@ C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.WhomTo
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.FormSettings.resources
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.LoadForm.resources
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.Statistic.resources
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.InsertPlayerNameForm.resources
