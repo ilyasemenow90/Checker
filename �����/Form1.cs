@@ -71,8 +71,8 @@ namespace Шашки
         //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
         //static extern void EI_Stop();
 
-        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        //static extern void EI_SetupBoard(StringBuilder pos);
+        [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
+        static extern void EI_SetupBoard(string pos);
 
         [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
         static extern void EI_SetTimeControl(int time, int inc);
@@ -1143,7 +1143,6 @@ namespace Шашки
         /// <summary>
         ///   Передача строки движения движку
         /// </summary>
-        //Дописать!!!
         private static void userMove(string move)
         {
             EI_MakeMove(move);
@@ -1226,7 +1225,11 @@ namespace Шашки
                 Properties.Settings.Default.FirstStart = false;
                 Properties.Settings.Default.Save();
             }
-            startNewGame(true);
+            loadGame();
+            if (!_gameStarted)
+            {
+                startNewGame(true);
+            }
         }
 
         public void refreshImage()
@@ -1298,22 +1301,6 @@ namespace Шашки
             {
                 timer1.Enabled = true;
                 сдатьсяToolStripMenuItem.Enabled = true;
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (_withHuman == 0) //с компьютером
-            {
-                Database.Instance.saveGameData(_withHuman, @"Игрок1", @"Computer", _timeGame, false,
-                                               _computerHard);
-            }
-            else
-            {
-                string playerOneName = Properties.Settings.Default.Player1;
-                string playerTwoName = Properties.Settings.Default.Player2;
-                Database.Instance.saveGameData(_withHuman, playerOneName, playerTwoName, _timeGame, false,
-                                               -1);
             }
         }
 
@@ -1395,6 +1382,189 @@ namespace Шашки
                     _gameStarted = false;
                 }
             }
+        }
+
+        private void form1FormClosing(object sender, FormClosingEventArgs e)
+        {
+            saveGame();
+        }
+
+        /// <summary>
+        /// Сохраняет игру. Сам решает делать сохранение или нет.
+        /// </summary>
+        private void saveGame()
+        {
+            if (!Properties.Settings.Default.SaveGameBeforeExit || !_gameStarted)
+            {
+                Properties.Settings.Default.SaveGame = @"";
+                Properties.Settings.Default.Save();
+                return;
+            }
+            /*
+             * Установить позицию pos на доске
+             * например, начальная позиция bbbbbbbbbbbb........wwwwwwwwwwwww
+             * b - простая черная
+             * B - черная дамка
+             * w - простая белая
+             * W - белая дамка
+             * . - пустое поле
+             * поля перечисляются так: b8, d8, f8, h8, a7, c7, ..., a1, c1, e1, g1
+             * последний символ определяет очередность хода
+             * w - белые, b - черные
+             */
+            string retStr = "";
+            for (int i = 8; i > 0; i--)
+            {
+                int startVert = i%2 == 0 ? 2 : 1;
+                for (int j = 1; j < 5; j++)
+                {
+                    var ch = checkerFromPosition(new Point(startVert, i));
+                    if (ch != null)
+                    {
+                        bool black = false;  //bBчерные wW белые 
+                        bool king = false;
+                        if (ch.color) //черные
+                        {
+                            black = true;
+                        }
+                        if (ch.king)
+                        {
+                            king = true;
+                        }
+                        if (black)
+                        {
+                            if (king)
+                            {
+                                retStr += "B";
+                            }
+                            else
+                            {
+                                retStr += "b";
+                            }
+                        }
+                        else
+                        {
+                            if (king)
+                            {
+                                retStr += "W";
+                            }
+                            else
+                            {
+                                retStr += "w";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        retStr += ".";
+                    }
+                    startVert += 2;
+                }
+            }
+            retStr += !step ? "w" : "b"; //сохраняем чей ход
+            retStr += "/";
+            retStr += _withHuman == 0 ? "0" : "1";  //сохраняем какая была игра с компьютером или с человеком
+            retStr += "/";
+            retStr += _timeGame.ToString();
+            Properties.Settings.Default.SaveGame = retStr;
+            Properties.Settings.Default.Save();
+        }
+
+        private void loadGame()
+        {
+            string loadGameStr = Properties.Settings.Default.SaveGame;
+            if (loadGameStr.Length == 0)
+            {
+                return;//сохранения нету
+            }
+            string[] loadArray = loadGameStr.Split(Convert.ToChar("/"));
+            // loadArray[0]  //данные о расстановке и кто ходит
+            // loadArray[1]  //данные о виде игры
+            // loadArray[2]  //данные о времени игры
+            int withHimGame = Convert.ToInt32(loadArray[1]); //последний символ содержит данные о виде игры (с компьютером или человеком)
+            _withHuman = withHimGame;
+            _timeGame = Convert.ToInt32(loadArray[2]);
+            if (withHimGame == 1) //игра с человеком
+            {
+                setCheckersOnBoardFromString(loadArray[0]);
+                _timeGame = Convert.ToInt32(loadArray[2]);
+                timer1.Enabled = true;
+                сдатьсяToolStripMenuItem.Enabled = true;
+                _gameStarted = true;
+            }
+            else
+            {
+                setCheckersOnBoardFromString(loadArray[0]);
+                timer1.Enabled = true;
+                сдатьсяToolStripMenuItem.Enabled = true;
+                _gameStarted = true;
+                newGame();
+                EI_SetupBoard(loadArray[0]);
+            }
+            setTimeGameLabelValue();
+        }
+
+        private void setCheckersOnBoardFromString(string boardChecker)
+        {
+            int numberCh = 0;
+            int count = 0;
+            for (int i = 8; i > 0; i--)
+            {
+                int startVert = i%2 == 0 ? 2 : 1;
+                for (int j = 1; j < 5; j++)
+                {
+                    char symbol = boardChecker[count];
+                    if (!symbol.Equals(Convert.ToChar(".")))
+                    {
+                        bool king = false;
+                        bool color = true;
+                        var asd = checkerArray[numberCh];
+                        if (symbol.Equals(Convert.ToChar("B")))
+                        {
+                            king = true;
+                        }
+                        if (symbol.Equals(Convert.ToChar("w")))
+                        {
+                            color = false;
+                        }
+                        if (symbol.Equals(Convert.ToChar("W")))
+                        {
+                            color = false;
+                            king = true;
+                        }
+                        asd.setPosition(startVert, i);
+                        asd.Location = new Point((asd.position.X - 1) * 50, (8 - asd.position.Y) * 50);
+                        asd.color = color;
+                        asd.king = king;
+                        if (!king)
+                        {
+                            asd.Image = color ? Properties.Resources.Шашка_1 : Properties.Resources.Шашка_2;
+                        }
+                        else
+                        {
+                            asd.Image = color ? Properties.Resources.Шашка_1_дамка : Properties.Resources.Шашка_2_дамка;
+                        }
+                        ++numberCh;
+                    }
+                    startVert += 2;
+                    ++count;
+                }
+            }
+            for (int i = numberCh; i < checkerArray.Count(); i++)
+            {
+                var chObj = checkerArray[i];
+                chObj.setPosition(-1, -1);
+                chObj.Location = new Point(400, 400);
+                chObj.click = false;
+            }
+            char stepCh = boardChecker[count]; //чей ход
+            bool newStep = false;
+            if (stepCh.Equals(Convert.ToChar("b")))
+            {
+                newStep = true;
+            }
+            step = newStep;
+            pictureBox1.Invalidate();
         }
     }
 }

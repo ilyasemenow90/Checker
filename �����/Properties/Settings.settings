@@ -35,5 +35,8 @@
     <Setting Name="Difficult" Description="Уровень сложности 0-2" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="SaveGame" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

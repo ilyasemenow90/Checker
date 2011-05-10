@@ -170,5 +170,17 @@ namespace Шашки.Properties {
                 this["Difficult"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SaveGame {
+            get {
+                return ((string)(this["SaveGame"]));
+            }
+            set {
+                this["SaveGame"] = value;
+            }
+        }
     }
 }
