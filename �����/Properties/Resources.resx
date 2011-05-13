@@ -118,19 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Шашка_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ресурсы\Шашка 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Шашка_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ресурсы\Шашка 2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Подложка_стола" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ресурсы\Подложка_стола.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Стол" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ресурсы\Игровой-стол.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ресурсы\Стол.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Шашка_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ресурсы\Черная_шашка.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Шашка_1_дамка" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ресурсы\Шашка 1_дамка.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ресурсы\Черная_шашка_дамка.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Шашка_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Ресурсы\Белая_шашка.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Шашка_2_дамка" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Ресурсы\Шашка 2_дамка.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Ресурсы\Белая_шашка_дамка.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -207,7 +207,7 @@
             this.radioButton1.Size = new System.Drawing.Size(68, 17);
             this.radioButton1.TabIndex = 0;
             this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Новичек";
+            this.radioButton1.Text = "Новичок";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton2CheckedChanged);
             // 

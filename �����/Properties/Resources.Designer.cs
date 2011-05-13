@@ -60,6 +60,13 @@ namespace Шашки.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Подложка_стола {
+            get {
+                object obj = ResourceManager.GetObject("Подложка_стола", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Стол {
             get {
                 object obj = ResourceManager.GetObject("Стол", resourceCulture);

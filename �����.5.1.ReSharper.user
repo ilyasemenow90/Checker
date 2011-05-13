@@ -10,39 +10,39 @@
   <CompletionStatisticsManager>
     <ItemStatistics item="Default">
       <Item value="public" priority="9" />
-      <Item value="var" priority="12" />
-      <Item value="private" priority="3" />
-      <Item value="void" priority="5" />
+      <Item value="var" priority="15" />
+      <Item value="private" priority="4" />
+      <Item value="void" priority="6" />
       <Item value="Close`0" priority="3" />
-      <Item value="Properties" priority="2" />
-      <Item value="Settings`0" priority="2" />
-      <Item value="if" priority="21" />
+      <Item value="Properties" priority="3" />
+      <Item value="Settings`0" priority="3" />
+      <Item value="if" priority="32" />
       <Item value="radioButton1" priority="2" />
       <Item value="RadioButton`0" priority="0" />
-      <Item value="else" priority="10" />
+      <Item value="else" priority="13" />
       <Item value="null" priority="3" />
       <Item value="radioButton" priority="0" />
       <Item value="FormSettings`0" priority="0" />
-      <Item value="new" priority="12" />
+      <Item value="new" priority="13" />
       <Item value="FormSettings" priority="0" />
       <Item value="newForm" priority="0" />
       <Item value="startNewGame`0" priority="0" />
       <Item value="foreach" priority="0" />
-      <Item value="int" priority="12" />
+      <Item value="int" priority="14" />
       <Item value="checkBox1" priority="0" />
       <Item value="Form`0" priority="0" />
-      <Item value="pictureBox1" priority="0" />
+      <Item value="pictureBox1" priority="3" />
       <Item value="_computerHard" priority="1" />
       <Item value="AboutBox1`0" priority="0" />
-      <Item value="gameEnded`0" priority="1" />
+      <Item value="gameEnded`0" priority="2" />
       <Item value="Program`0" priority="0" />
       <Item value="progressBar1" priority="0" />
       <Item value="LoadForm`0" priority="0" />
-      <Item value="this" priority="2" />
+      <Item value="this" priority="4" />
       <Item value="static" priority="0" />
       <Item value="Database`0" priority="4" />
       <Item value="Database" priority="0" />
-      <Item value="return" priority="2" />
+      <Item value="return" priority="5" />
       <Item value="dataObject" priority="0" />
       <Item value="value" priority="0" />
       <Item value="Statistic`0" priority="0" />
@@ -50,17 +50,17 @@
       <Item value="DateTime`0" priority="3" />
       <Item value="DateTime" priority="0" />
       <Item value="timer1" priority="4" />
-      <Item value="true" priority="6" />
-      <Item value="string" priority="19" />
+      <Item value="true" priority="9" />
+      <Item value="string" priority="22" />
       <Item value="newString" priority="0" />
-      <Item value="_withHuman" priority="1" />
-      <Item value="step" priority="0" />
-      <Item value="bool" priority="7" />
+      <Item value="_withHuman" priority="3" />
+      <Item value="step" priority="1" />
+      <Item value="bool" priority="12" />
       <Item value="_playerColor" priority="0" />
-      <Item value="_timeGame" priority="0" />
+      <Item value="_timeGame" priority="3" />
       <Item value="timer1Tick`0" priority="0" />
-      <Item value="false" priority="7" />
-      <Item value="_gameStarted" priority="1" />
+      <Item value="false" priority="11" />
+      <Item value="_gameStarted" priority="2" />
       <Item value="firstPlayerWin" priority="0" />
       <Item value="Шашки" priority="0" />
       <Item value="FileShare`0" priority="0" />
@@ -79,12 +79,12 @@
       <Item value="dateGame" priority="1" />
       <Item value="hardComputer" priority="0" />
       <Item value="playerOneWin" priority="0" />
-      <Item value="Convert`0" priority="1" />
+      <Item value="Convert`0" priority="4" />
       <Item value="date" priority="0" />
       <Item value="ArrayList`0" priority="2" />
       <Item value="Dictionary" priority="1" />
       <Item value="List" priority="1" />
-      <Item value="Text" priority="2" />
+      <Item value="Text" priority="3" />
       <Item value="label1" priority="0" />
       <Item value="number" priority="0" />
       <Item value="textBox1" priority="4" />
@@ -104,29 +104,48 @@
       <Item value="goodTime" priority="0" />
       <Item value="listTimeGame" priority="0" />
       <Item value="List&lt;int&gt;" priority="0" />
-      <Item value="for" priority="1" />
+      <Item value="for" priority="4" />
       <Item value="while" priority="0" />
-      <Item value="i" priority="0" />
+      <Item value="i" priority="1" />
       <Item value="File`0" priority="0" />
       <Item value="Color`0" priority="0" />
       <Item value="Help`0" priority="0" />
-      <Item value="MessageBox`0" priority="0" />
+      <Item value="MessageBox`0" priority="1" />
       <Item value="YesNo" priority="0" />
       <Item value="сдатьсяToolStripMenuItem" priority="0" />
+      <Item value="checkerFromPosition`0" priority="0" />
+      <Item value="Point" priority="0" />
+      <Item value="startVert" priority="0" />
+      <Item value="ch" priority="1" />
+      <Item value="retStr" priority="2" />
+      <Item value="black" priority="0" />
+      <Item value="saveGame`0" priority="0" />
+      <Item value="StringFormat`0" priority="0" />
+      <Item value="boardChecker" priority="0" />
+      <Item value="checkerArray" priority="1" />
+      <Item value="color" priority="0" />
+      <Item value="king" priority="1" />
+      <Item value="numberCh" priority="0" />
+      <Item value="Count`1" priority="0" />
+      <Item value="deleteChecker`0" priority="0" />
+      <Item value="newGame`0" priority="0" />
+      <Item value="Length" priority="0" />
+      <Item value="InvokePaint`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Шашки.Properties.Settings">
-      <Item value="Default" priority="3" />
+      <Item value="Default" priority="4" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Шашки.Properties.Settings">
       <Item value="HardLevel" priority="1" />
-      <Item value="Save`0" priority="1" />
+      <Item value="Save`0" priority="3" />
       <Item value="Player1_color" priority="0" />
       <Item value="HighlightedMove" priority="0" />
-      <Item value="SaveGameBeforeExit" priority="0" />
+      <Item value="SaveGameBeforeExit" priority="1" />
       <Item value="PlaySound" priority="0" />
       <Item value="PlayBackgroundMusic" priority="0" />
       <Item value="Player1" priority="1" />
       <Item value="Player2" priority="0" />
+      <Item value="SaveGame" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Windows.Forms.RadioButton">
       <Item value="Enabled" priority="1" />
@@ -139,7 +158,7 @@
       <Item value="Checked" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Windows.Forms.PictureBox">
-      <Item value="Invalidate`0" priority="0" />
+      <Item value="Invalidate`0" priority="2" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Шашки.AboutBox1">
       <Item value="ShowDialog`0" priority="0" />
@@ -160,11 +179,12 @@
       <Item value="Text" priority="5" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Int32">
-      <Item value="ToString`0" priority="6" />
+      <Item value="ToString`0" priority="7" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.String">
-      <Item value="Length" priority="1" />
+      <Item value="Length" priority="2" />
       <Item value="ToString`0" priority="3" />
+      <Item value="Split`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.String">
       <Item value="Format`0" priority="2" />
@@ -180,6 +200,7 @@
     <ItemStatistics item="Qualified:Шашки.Form1">
       <Item value="_withHuman" priority="0" />
       <Item value="_timeGame" priority="0" />
+      <Item value="Invoke`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Xml.XmlElement">
       <Item value="SetAttribute`0" priority="0" />
@@ -200,9 +221,10 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Convert">
       <Item value="ToBoolean`0" priority="0" />
-      <Item value="ToInt32`0" priority="0" />
+      <Item value="ToInt32`0" priority="3" />
       <Item value="ToDateTime`0" priority="0" />
       <Item value="ToString`0" priority="0" />
+      <Item value="ToChar`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.ArrayList">
       <Item value="Add`0" priority="0" />
@@ -259,10 +281,22 @@
       <Item value="ShowHelp`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Windows.Forms.MessageBox">
-      <Item value="Show`0" priority="0" />
+      <Item value="Show`0" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Windows.Forms.ToolStripMenuItem">
       <Item value="Enabled" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Шашки.Checker">
+      <Item value="color" priority="1" />
+      <Item value="king" priority="0" />
+      <Item value="SendToBack`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Char">
+      <Item value="Equals`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Шашки.Properties.Resources">
+      <Item value="Шашка_1_дамка" priority="0" />
+      <Item value="Шашка_2_дамка" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
   <RecentFiles>
@@ -274,47 +308,47 @@
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:AboutBox1.cs" caret="694" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:LoadForm.cs" caret="13" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Program.cs" caret="466" fromTop="12" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.Designer.cs" caret="0" fromTop="0" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1187" fromTop="10" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:InsertPlayerNameForm.Designer.cs" caret="0" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:InsertPlayerNameForm.cs" caret="978" fromTop="19" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:GameSettings.cs" caret="381" fromTop="15" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Database.cs" caret="5221" fromTop="18" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.Designer.cs" caret="0" fromTop="0" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="2408" fromTop="15" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="23087" fromTop="23" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.Designer.cs" caret="32282" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:GameSettings.cs" caret="381" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="1187" fromTop="10" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="25232" fromTop="21" />
     </RecentFiles>
     <RecentEdits>
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="2832" fromTop="20" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="6541" fromTop="0" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="2485" fromTop="13" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="3975" fromTop="18" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="4136" fromTop="22" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="4364" fromTop="28" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Statistic.cs" caret="3046" fromTop="14" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="45071" fromTop="10" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="317" fromTop="10" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="48190" fromTop="13" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="48257" fromTop="15" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="6380" fromTop="11" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="48462" fromTop="18" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="48678" fromTop="11" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="51148" fromTop="29" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="48960" fromTop="12" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="48733" fromTop="8" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="49945" fromTop="12" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="50841" fromTop="20" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="12150" fromTop="18" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="3134" fromTop="12" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="21530" fromTop="16" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="24648" fromTop="16" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="25578" fromTop="16" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="47330" fromTop="18" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="48834" fromTop="16" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="49616" fromTop="11" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="49812" fromTop="16" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="22911" fromTop="18" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="23087" fromTop="23" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="55837" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="57313" fromTop="22" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="57664" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="45119" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="56011" fromTop="11" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="56367" fromTop="19" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="56530" fromTop="23" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="56847" fromTop="26" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="1982" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="55457" fromTop="22" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="57982" fromTop="21" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.Designer.cs" caret="32282" fromTop="10" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="53948" fromTop="14" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="50927" fromTop="10" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="47701" fromTop="13" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:FormSettings.cs" caret="2292" fromTop="10" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="47690" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="3007" fromTop="11" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="45147" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="44778" fromTop="7" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="54757" fromTop="17" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="43891" fromTop="13" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="25096" fromTop="8" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="26197" fromTop="27" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="26078" fromTop="3" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="26147" fromTop="10" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="25944" fromTop="25" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="25110" fromTop="9" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="25304" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="25576" fromTop="18" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

@@ -188,6 +188,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SiDra.dll" />
+    <None Include="Ресурсы\Белая_шашка.png" />
+    <None Include="Ресурсы\Белая_шашка_дамка.png" />
+    <None Include="Ресурсы\Подложка_стола.png" />
+    <None Include="Ресурсы\Стол.png" />
+    <None Include="Ресурсы\Черная_шашка.png" />
+    <None Include="Ресурсы\Черная_шашка_дамка.png" />
     <Content Include="Ресурсы\Шашка 1_дамка.png" />
     <Content Include="Ресурсы\Шашка 2_дамка.png" />
   </ItemGroup>

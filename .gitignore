@@ -1,0 +1,4 @@
+$ cat .gitignore
+_ReSharper.\330\340\370\352\350/
+Шашки/bin/
+Шашки/obj/

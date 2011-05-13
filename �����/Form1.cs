@@ -105,8 +105,6 @@ namespace Шашки
             {
                 checkerArray[i] = new Checker();
             }
-            createCheckers(0, 12, true);
-            createCheckers(12, 24, false);
             realForm = this;
             
         }
@@ -711,11 +709,14 @@ namespace Шашки
         /// </summary>
         private void startNewGame(bool changeHuman)
         {
+           
+            deleteAllCheckers();
+
             resetAllGameValueToDefaullt(changeHuman);
-            resetAllCheckersOnBoard();
             if (_withHuman == 0) //с компьютером
             {
                 newGame();
+                resetAllCheckersOnBoard();
                 if (_playerColor) //игрок ходит черными!!!
                 {
                     //делаем ход компьютера
@@ -731,7 +732,18 @@ namespace Шашки
                 var newFormSecond = new InsertPlayerNameForm(2);
                 newFormFirst.ShowDialog();
                 newFormSecond.ShowDialog();
+                resetAllCheckersOnBoard();
             }
+        }
+
+        private void deleteAllCheckers()
+        {
+            for (int i = 0; i < checkerArray.Length; i++)
+            {
+                Checker asd = checkerArray[i];
+                asd.SendToBack();
+            }
+            pictureBox1.Invalidate();
         }
 
 
@@ -1484,6 +1496,10 @@ namespace Шашки
             int withHimGame = Convert.ToInt32(loadArray[1]); //последний символ содержит данные о виде игры (с компьютером или человеком)
             _withHuman = withHimGame;
             _timeGame = Convert.ToInt32(loadArray[2]);
+
+            createCheckers(0, 12, true);
+            createCheckers(12, 24, false);
+
             if (withHimGame == 1) //игра с человеком
             {
                 setCheckersOnBoardFromString(loadArray[0]);
