@@ -14,11 +14,13 @@ namespace Шашки
         public bool king;  //дамка или нет?
         public Point position;  //X (a,b,c,d...f)  Y(1,2,3,4...8)
         public bool fight; //Когда шашка забирает шашку противника значение становится true до начала следующего хода
+        public bool knock; //Шашка сбита (состояние, когда шашка сбита со стола, но ещё не убрана  с него)
         public Checker() 
         { 
             click = false;
             king = false;
             fight = false;
+            knock = false;
             position = new Point(-1, -1);
         }
 
@@ -27,6 +29,7 @@ namespace Шашки
             click = false;
             king = false;
             fight = false;
+            knock = false;
             position = new Point(-1, -1);
         }
 

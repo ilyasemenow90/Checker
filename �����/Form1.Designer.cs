@@ -50,6 +50,8 @@ namespace Шашки
             this.timerLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.lblFirstPlayerName = new System.Windows.Forms.Label();
+            this.lblSeconPlayerName = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -65,6 +67,7 @@ namespace Шашки
             this.menuStrip1.Size = new System.Drawing.Size(799, 24);
             this.menuStrip1.TabIndex = 35;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // файлToolStripMenuItem
             // 
@@ -123,6 +126,7 @@ namespace Шашки
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(133, 6);
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // настройкиToolStripMenuItem
             // 
@@ -135,6 +139,7 @@ namespace Шашки
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(133, 6);
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // выходToolStripMenuItem
             // 
@@ -151,6 +156,7 @@ namespace Шашки
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.справкаToolStripMenuItem.Text = "Справка";
+            this.справкаToolStripMenuItem.Click += new System.EventHandler(this.справкаToolStripMenuItem_Click);
             // 
             // какИгратьToolStripMenuItem
             // 
@@ -174,13 +180,15 @@ namespace Шашки
             // timerLabel
             // 
             this.timerLabel.AutoSize = true;
-            this.timerLabel.BackColor = System.Drawing.Color.Transparent;
+            this.timerLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.timerLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.timerLabel.Location = new System.Drawing.Point(365, 62);
+            this.timerLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(91)))), ((int)(((byte)(68)))));
+            this.timerLabel.Location = new System.Drawing.Point(377, 90);
             this.timerLabel.Name = "timerLabel";
             this.timerLabel.Size = new System.Drawing.Size(46, 19);
             this.timerLabel.TabIndex = 36;
             this.timerLabel.Text = "00:00";
+            this.timerLabel.Click += new System.EventHandler(this.timerLabel_Click);
             // 
             // pictureBox1
             // 
@@ -192,6 +200,7 @@ namespace Шашки
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1Paint);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1MouseDown);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1MouseUp);
@@ -204,6 +213,33 @@ namespace Шашки
             this.pictureBox2.Size = new System.Drawing.Size(800, 800);
             this.pictureBox2.TabIndex = 37;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
+            // lblFirstPlayerName
+            // 
+            this.lblFirstPlayerName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
+            this.lblFirstPlayerName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold);
+            this.lblFirstPlayerName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(91)))), ((int)(((byte)(68)))));
+            this.lblFirstPlayerName.Location = new System.Drawing.Point(43, 90);
+            this.lblFirstPlayerName.MaximumSize = new System.Drawing.Size(130, 19);
+            this.lblFirstPlayerName.Name = "lblFirstPlayerName";
+            this.lblFirstPlayerName.Size = new System.Drawing.Size(130, 19);
+            this.lblFirstPlayerName.TabIndex = 38;
+            this.lblFirstPlayerName.Text = "label1";
+            this.lblFirstPlayerName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblSeconPlayerName
+            // 
+            this.lblSeconPlayerName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
+            this.lblSeconPlayerName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold);
+            this.lblSeconPlayerName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(91)))), ((int)(((byte)(68)))));
+            this.lblSeconPlayerName.Location = new System.Drawing.Point(626, 90);
+            this.lblSeconPlayerName.MaximumSize = new System.Drawing.Size(133, 19);
+            this.lblSeconPlayerName.Name = "lblSeconPlayerName";
+            this.lblSeconPlayerName.Size = new System.Drawing.Size(133, 19);
+            this.lblSeconPlayerName.TabIndex = 39;
+            this.lblSeconPlayerName.Text = "label1";
+            this.lblSeconPlayerName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Form1
             // 
@@ -211,6 +247,8 @@ namespace Шашки
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(799, 662);
+            this.Controls.Add(this.lblSeconPlayerName);
+            this.Controls.Add(this.lblFirstPlayerName);
             this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
@@ -268,6 +306,8 @@ namespace Шашки
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label timerLabel;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label lblFirstPlayerName;
+        private System.Windows.Forms.Label lblSeconPlayerName;
     }
 }
 
