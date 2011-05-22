@@ -53,6 +53,9 @@ namespace Шашки
         /// </summary>
         private bool _gameStarted;
 
+
+        private Player backgroundPlayer, gameMusic;
+ 
         [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
         static extern void EI_MakeMove(string move);
 
@@ -94,6 +97,13 @@ namespace Шашки
         public Form1()
         {
             InitializeComponent();
+
+            backgroundPlayer = new Player();
+            gameMusic = new Player();
+
+            backgroundPlayer.Open(@"background.mp3");
+            
+
 
             _timeGame = 0;
             logMove = false;
@@ -648,25 +658,11 @@ namespace Шашки
             {
                 if (!_playerColor)
                 {
-                    if (!step)
-                    {
-                        newString = "Вы проиграли";
-                    }
-                    else
-                    {
-                        newString = "Вы победили";
-                    }
+                    newString = !step ? "Вы проиграли" : "Вы победили";
                 }
                 else
                 {
-                    if (step)
-                    {
-                        newString = "Вы проиграли";
-                    }
-                    else
-                    {
-                        newString = "Вы победили";
-                    }
+                    newString = step ? "Вы проиграли" : "Вы победили";
                 }
 
             }
@@ -863,7 +859,7 @@ namespace Шашки
                                         {
                                             break;
                                         }
-                                        if (pseudoCh == null && killMove.X > 0 && killMove.X < 9
+                                        if (killMove.X > 0 && killMove.X < 9
                                             && killMove.Y > 0 && killMove.Y < 9)  //значит можно бить шашку
                                         {
                                             active.setPosition(killMove.X, killMove.Y);
@@ -1068,7 +1064,7 @@ namespace Шашки
 
             var drawRectangle = new Rectangle(x,y,wight,height);
 
-            SolidBrush objBr = new SolidBrush(Color.FromArgb(114,141,158));
+            SolidBrush objBr = new SolidBrush(Color.FromArgb(114, 141, 158));
             g.FillRectangle(objBr, drawRectangle);
         }
 
@@ -1364,6 +1360,15 @@ namespace Шашки
         {
             var newForm = new FormSettings();
             newForm.ShowDialog(this);
+            if (Properties.Settings.Default.PlayBackgroundMusic)
+            {
+                backgroundPlayer.Play(true);
+                backgroundPlayer.MasterVolume = 50*10;
+            }
+            else
+            {
+                backgroundPlayer.Pause();
+            }
         }
 
         private void form1Load(object sender, EventArgs e)
@@ -1379,6 +1384,12 @@ namespace Шашки
             if (!_gameStarted)
             {
                 startNewGame(true);
+            }
+
+            if (backgroundPlayer.IsOpen() && Properties.Settings.Default.PlayBackgroundMusic)
+            {
+                backgroundPlayer.Play(true);
+                backgroundPlayer.MasterVolume = 10*50; //max Volume 10*100
             }
         }
 
@@ -1517,7 +1528,7 @@ namespace Шашки
                     Controls.Remove(ch);
                 }
             }
-            this.Invalidate();
+            Invalidate();
             pictureBox1.Invalidate();
         }
 
@@ -1885,11 +1896,6 @@ namespace Шашки
             }
         }
          
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-            pictureBox2.Invalidate();
-        }
 
         /// <summary>
         /// Возвращает конечную позицию шашки, после того, как ее сбили. Т.е. куда ей требуется переместиться (в координатах form1)
@@ -1945,12 +1951,10 @@ namespace Шашки
             stepChangeY.Clear();
             endPositionChecker.Clear();
  
-
             checkerMovesList = moveChList;
 
             int timerInterval = 10;
             countChangePos = 100 / timerInterval;
-
 
             for (int i = 0; i < checkerMovesList.Count; i++ )
             {
@@ -1967,10 +1971,6 @@ namespace Шашки
                 chMove.setPosition(-1, -1);
                 chMove.BringToFront();
             }
-
-
-
-
 
             _timerForChangePos = new Timer { Interval = timerInterval };
             _timerForChangePos.Tick += changePositionElapsed;

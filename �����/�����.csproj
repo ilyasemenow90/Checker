@@ -118,6 +118,7 @@
     <Compile Include="LoadForm.Designer.cs">
       <DependentUpon>LoadForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Player.cs" />
     <Compile Include="Statistic.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +195,7 @@
     <None Include="Ресурсы\Стол.png" />
     <None Include="Ресурсы\Черная_шашка.png" />
     <None Include="Ресурсы\Черная_шашка_дамка.png" />
+    <None Include="Ресурсы\Чайковский-Октябрь.mp3" />
     <Content Include="Ресурсы\Шашка 1_дамка.png" />
     <Content Include="Ресурсы\Шашка 2_дамка.png" />
   </ItemGroup>

@@ -30,8 +30,8 @@ namespace Шашки
             checkBox1.Checked = !Properties.Settings.Default.Player1_color;
             checkBox2.Checked = Properties.Settings.Default.HighlightedMove;
             checkBox3.Checked = Properties.Settings.Default.SaveGameBeforeExit;
-            checkBox3.Checked = Properties.Settings.Default.PlaySound;
-            checkBox3.Checked = Properties.Settings.Default.PlayBackgroundMusic;
+            checkBox4.Checked = Properties.Settings.Default.PlaySound;
+            checkBox5.Checked = Properties.Settings.Default.PlayBackgroundMusic;
         }
 
         private void exitFromForm()
@@ -60,8 +60,8 @@ namespace Шашки
             Properties.Settings.Default.Player1_color = !checkBox1.Checked;
             Properties.Settings.Default.HighlightedMove = checkBox2.Checked;
             Properties.Settings.Default.SaveGameBeforeExit = checkBox3.Checked;
-            Properties.Settings.Default.PlaySound = checkBox3.Checked;
-            Properties.Settings.Default.PlayBackgroundMusic =checkBox3.Checked;
+            Properties.Settings.Default.PlaySound = checkBox4.Checked;
+            Properties.Settings.Default.PlayBackgroundMusic =checkBox5.Checked;
 
             Properties.Settings.Default.Save();
 
