@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Шашки</RootNamespace>
     <AssemblyName>Шашки</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>C:\Users\Lexus\Desktop\Новая папка\</PublishUrl>
@@ -179,15 +180,6 @@
     <None Include="Шашки_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ресурсы\Шашка 1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Ресурсы\Шашка 2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Ресурсы\Игровой-стол.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="SiDra.dll" />
     <None Include="Ресурсы\Белая_шашка.png" />
     <None Include="Ресурсы\Белая_шашка_дамка.png" />
@@ -196,8 +188,6 @@
     <None Include="Ресурсы\Черная_шашка.png" />
     <None Include="Ресурсы\Черная_шашка_дамка.png" />
     <None Include="Ресурсы\Чайковский-Октябрь.mp3" />
-    <Content Include="Ресурсы\Шашка 1_дамка.png" />
-    <Content Include="Ресурсы\Шашка 2_дамка.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
