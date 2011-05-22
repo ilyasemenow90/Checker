@@ -2,5 +2,5 @@
   <Module PersistentId="d:Miscellaneous Files" ModuleId="System.Windows.Forms" />
   <Module PersistentId="DD5F6774-4013-43D9-931C-844AA61957E2" ModuleId="Шашки" />
   <Module PersistentId="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System.Windows.Forms_1" />
-  <Module PersistentId="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System.Windows.Forms_2" />
+  <Module PersistentId="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System.Windows.Forms_2" />
 </Modules>

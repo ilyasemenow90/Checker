@@ -783,7 +783,10 @@ namespace Шашки
                     timer1.Enabled = true;
                     сдатьсяToolStripMenuItem.Enabled = true;
                     _gameStarted = true;
-                    computerStep();
+
+                    _timerForComputerStep = new Timer { Interval = 10 };
+                    _timerForComputerStep.Tick += computerTimerElapsed;
+                    _timerForComputerStep.Enabled = true;
                 }
             }
             else
@@ -1358,6 +1361,7 @@ namespace Шашки
 
         private void настройкиToolStripMenuItemClick(object sender, EventArgs e)
         {
+            bool playerColorBeforeSettings = Properties.Settings.Default.Player1_color;
             var newForm = new FormSettings();
             newForm.ShowDialog(this);
             if (Properties.Settings.Default.PlayBackgroundMusic)
@@ -1368,6 +1372,15 @@ namespace Шашки
             else
             {
                 backgroundPlayer.Pause();
+            }
+            if (Properties.Settings.Default.Player1_color != playerColorBeforeSettings)
+            {
+                 const string addStr = @"Желаете ли Вы начать игру с новыми параметрами?";
+                var result1 = MessageBox.Show(addStr, @"Изменение настроек", MessageBoxButtons.YesNo);
+                if (result1 == DialogResult.Yes)
+                {
+                    startNewGame(true);
+                }
             }
         }
 
@@ -1389,7 +1402,7 @@ namespace Шашки
             if (backgroundPlayer.IsOpen() && Properties.Settings.Default.PlayBackgroundMusic)
             {
                 backgroundPlayer.Play(true);
-                backgroundPlayer.MasterVolume = 10*50; //max Volume 10*100
+                backgroundPlayer.MasterVolume = 10 * 50; //max Volume 10*100
             }
         }
 
@@ -1476,7 +1489,7 @@ namespace Шашки
 
         private void сдатьсяToolStripMenuItemClick(object sender, EventArgs e)
         {
-            const string addStr = @"Вы уверены, что хотите сдаться? В текущей партии вам будет зачислено поражение";
+            const string addStr = @"Вы уверены, что хотите сдаться? В текущей партии вам будет зачислено поражение.";
             var result1 = MessageBox.Show(addStr, @"Сдаться", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
@@ -1950,7 +1963,11 @@ namespace Шашки
             stepChangeX.Clear();
             stepChangeY.Clear();
             endPositionChecker.Clear();
- 
+
+            if (moveChList.Count == 0)
+            {
+                return;
+            }
             checkerMovesList = moveChList;
 
             int timerInterval = 10;

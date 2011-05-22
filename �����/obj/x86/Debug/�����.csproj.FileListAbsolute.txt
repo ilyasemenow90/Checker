@@ -30,3 +30,10 @@ C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.FormSe
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.LoadForm.resources
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.Statistic.resources
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.InsertPlayerNameForm.resources
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.exe.manifest
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.application
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.TrustInfo.xml
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.exe.manifest
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.application
