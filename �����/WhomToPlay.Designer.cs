@@ -35,7 +35,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(23, 52);
+            this.button1.Location = new System.Drawing.Point(26, 55);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(85, 30);
             this.button1.TabIndex = 0;
@@ -45,7 +45,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(185, 52);
+            this.button2.Location = new System.Drawing.Point(154, 55);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(86, 30);
             this.button2.TabIndex = 1;
@@ -57,7 +57,8 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(39, 9);
+            this.label1.ForeColor = System.Drawing.Color.BurlyWood;
+            this.label1.Location = new System.Drawing.Point(22, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(218, 19);
             this.label1.TabIndex = 2;
@@ -66,13 +67,17 @@
             // WhomToPlay
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(303, 98);
+            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.ClientSize = new System.Drawing.Size(267, 98);
             this.ControlBox = false;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(273, 122);
+            this.MinimumSize = new System.Drawing.Size(273, 122);
             this.Name = "WhomToPlay";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Выбор оппонента";
             this.ResumeLayout(false);

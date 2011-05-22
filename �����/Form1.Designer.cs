@@ -67,7 +67,6 @@ namespace Шашки
             this.menuStrip1.Size = new System.Drawing.Size(799, 24);
             this.menuStrip1.TabIndex = 35;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // файлToolStripMenuItem
             // 
@@ -126,7 +125,6 @@ namespace Шашки
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(133, 6);
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // настройкиToolStripMenuItem
             // 
@@ -139,7 +137,6 @@ namespace Шашки
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(133, 6);
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // выходToolStripMenuItem
             // 
@@ -156,7 +153,6 @@ namespace Шашки
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.справкаToolStripMenuItem.Text = "Справка";
-            this.справкаToolStripMenuItem.Click += new System.EventHandler(this.справкаToolStripMenuItem_Click);
             // 
             // какИгратьToolStripMenuItem
             // 
@@ -188,7 +184,6 @@ namespace Шашки
             this.timerLabel.Size = new System.Drawing.Size(46, 19);
             this.timerLabel.TabIndex = 36;
             this.timerLabel.Text = "00:00";
-            this.timerLabel.Click += new System.EventHandler(this.timerLabel_Click);
             // 
             // pictureBox1
             // 
@@ -200,7 +195,6 @@ namespace Шашки
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1Paint);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1MouseDown);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1MouseUp);
@@ -213,7 +207,6 @@ namespace Шашки
             this.pictureBox2.Size = new System.Drawing.Size(800, 800);
             this.pictureBox2.TabIndex = 37;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // lblFirstPlayerName
             // 

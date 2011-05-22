@@ -46,6 +46,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Location = new System.Drawing.Point(3, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(175, 13);
@@ -54,6 +55,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.radioButton3);
             this.panel1.Controls.Add(this.radioButton2);
@@ -67,7 +69,8 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(21, 108);
+            this.radioButton3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton3.Location = new System.Drawing.Point(21, 103);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(101, 17);
             this.radioButton3.TabIndex = 3;
@@ -78,7 +81,8 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(21, 74);
+            this.radioButton2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioButton2.Location = new System.Drawing.Point(21, 68);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(76, 17);
             this.radioButton2.TabIndex = 2;
@@ -89,6 +93,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.radioButton1.Location = new System.Drawing.Point(21, 35);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(68, 17);
@@ -100,6 +105,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.ForeColor = System.Drawing.Color.BurlyWood;
             this.checkBox1.Location = new System.Drawing.Point(210, 12);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(149, 17);
@@ -110,6 +116,7 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
+            this.checkBox2.ForeColor = System.Drawing.Color.BurlyWood;
             this.checkBox2.Location = new System.Drawing.Point(210, 35);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(189, 17);
@@ -120,6 +127,7 @@
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
+            this.checkBox3.ForeColor = System.Drawing.Color.BurlyWood;
             this.checkBox3.Location = new System.Drawing.Point(210, 58);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(185, 17);
@@ -130,6 +138,7 @@
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
+            this.checkBox4.ForeColor = System.Drawing.Color.BurlyWood;
             this.checkBox4.Location = new System.Drawing.Point(210, 81);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(188, 17);
@@ -140,6 +149,7 @@
             // checkBox5
             // 
             this.checkBox5.AutoSize = true;
+            this.checkBox5.ForeColor = System.Drawing.Color.BurlyWood;
             this.checkBox5.Location = new System.Drawing.Point(210, 107);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(199, 17);
@@ -171,6 +181,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(424, 179);
             this.ControlBox = false;
             this.Controls.Add(this.button2);
@@ -182,7 +193,10 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(430, 203);
+            this.MinimumSize = new System.Drawing.Size(430, 203);
             this.Name = "FormSettings";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройки";
             this.panel1.ResumeLayout(false);

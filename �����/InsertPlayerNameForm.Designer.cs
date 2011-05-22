@@ -35,7 +35,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(99, 87);
+            this.button1.Location = new System.Drawing.Point(114, 87);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -46,6 +46,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.BurlyWood;
             this.label1.Location = new System.Drawing.Point(34, 24);
             this.label1.Margin = new System.Windows.Forms.Padding(5);
             this.label1.Name = "label1";
@@ -65,12 +66,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(296, 122);
             this.ControlBox = false;
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(302, 146);
+            this.MinimumSize = new System.Drawing.Size(302, 146);
             this.Name = "InsertPlayerNameForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Введите имя игрока";

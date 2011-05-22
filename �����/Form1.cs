@@ -595,16 +595,55 @@ namespace Шашки
             createCheckers(12, 24, false);
         }
 
-        /// <summary>
-        ///   Игра окончена
-        /// </summary>
-        private void gameEnded()
+        private bool whoWinBool()
         {
-            _gameStarted = false;
-            string newString;
-            timer1.Enabled = false;
-            сдатьсяToolStripMenuItem.Enabled = false;
             bool firstPlayerWin = false;
+            if (_withHuman == 0) //играем с компьютером
+            {
+                if (!_playerColor)
+                {
+                    if (step)
+                    {
+                        firstPlayerWin = true;
+                    }
+                }
+                else
+                {
+                    if (!step)
+                    {
+                        firstPlayerWin = true;
+                    }
+                }
+
+            }
+            else
+            {
+                if (!_playerColor)
+                {
+                    if (!step)
+                    {
+                        firstPlayerWin = true;
+                    }
+                }
+                else
+                {
+                    if (step)
+                    {
+                        firstPlayerWin = true;
+                    }
+                }
+
+            }
+            return firstPlayerWin;
+        }
+
+        /// <summary>
+        /// Возвращает строку с текстом "Игрок выиграл/проиграл"
+        /// </summary>
+        /// <returns></returns>
+        private string whoWinString()
+        {
+            string newString;
             if (_withHuman == 0) //играем с компьютером
             {
                 if (!_playerColor)
@@ -615,7 +654,6 @@ namespace Шашки
                     }
                     else
                     {
-                        firstPlayerWin = true;
                         newString = "Вы победили";
                     }
                 }
@@ -627,11 +665,10 @@ namespace Шашки
                     }
                     else
                     {
-                        firstPlayerWin = true;
                         newString = "Вы победили";
                     }
                 }
-                
+
             }
             else
             {
@@ -643,10 +680,10 @@ namespace Шашки
                     }
                     else
                     {
-                        firstPlayerWin = true;
                         newString = lblFirstPlayerName.Text + " победил";
                     }
-                } else
+                }
+                else
                 {
                     if (step)
                     {
@@ -654,12 +691,25 @@ namespace Шашки
                     }
                     else
                     {
-                        firstPlayerWin = true;
                         newString = lblFirstPlayerName.Text + " победил";
                     }
                 }
-                
+
             }
+            return newString;
+        }
+
+        /// <summary>
+        ///   Игра окончена
+        /// </summary>
+        private void gameEnded()
+        {
+            _gameStarted = false;
+            string newString = whoWinString();
+            timer1.Enabled = false;
+            сдатьсяToolStripMenuItem.Enabled = false;
+            bool firstPlayerWin = whoWinBool();
+            
             
             //this.
             if (_withHuman == 0) //с компьютером
@@ -678,6 +728,7 @@ namespace Шашки
             var result1 = MessageBox.Show(newString, @"Игра окончена", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
+                clearCheckersFromWindow();
                 startNewGame(true);
             }
             else
@@ -787,13 +838,14 @@ namespace Шашки
                     for (var k = 0; k < 2; k++)
                     {
                         var deltaY = k == 0 ? -1 : 1; //вверх, потом вниз
+                        bool fightKillBreak = false;
                         for (var i = 1; i < 9; i++)
                         {
                             var canKill = true;
                             var ch = checkerFromPosition(new Point(activePoint.X + deltaX * i, activePoint.Y + deltaY * i)); //берем все шашки во всех направлениях
                             if (ch != null)
                             {
-                                if (ch.color != active.color && !ch.knock)
+                                if (ch.color != active.color && !ch.knock && !fightKillBreak)
                                 {
                                     var addedToMoveArray = new ArrayList(4);
 
@@ -807,6 +859,10 @@ namespace Шашки
                                         var yMove = activePoint.Y + deltaY * (i + l);
                                         var killMove = new Point(xMove, yMove);
                                         Checker pseudoCh = checkerFromPosition(killMove);
+                                        if (pseudoCh != null)
+                                        {
+                                            break;
+                                        }
                                         if (pseudoCh == null && killMove.X > 0 && killMove.X < 9
                                             && killMove.Y > 0 && killMove.Y < 9)  //значит можно бить шашку
                                         {
@@ -814,6 +870,7 @@ namespace Шашки
                                             if (fightChecker(active))
                                             {
                                                 fightKillKing = true;
+                                                fightKillBreak = true;
                                                 addedToMoveArray.Add(killMove);
                                             }
                                             active.setPosition(activePoint.X, activePoint.Y);
@@ -1097,16 +1154,22 @@ namespace Шашки
         /// </summary>
         public void removeKnokedChecker()
         {
+            var removeCheckers = new ArrayList(5);
             foreach (var ch in checkerArray)
             {
                 if (ch.knock)
                 {
+                    removeCheckers.Add(ch);
+                    /*
                     ch.setPosition(-1, -1);
                     ch.Location = new Point(400, 400);
                     ch.click = false;
                     pictureBox1.Invalidate();
+                    */
                 }
             }
+            movecheckerToPosition(removeCheckers);
+
         }
 
         /// <summary>
@@ -1406,43 +1469,13 @@ namespace Шашки
             var result1 = MessageBox.Show(addStr, @"Сдаться", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
+                clearCheckersFromWindow();
                 _gameStarted = false;
-                string newString;
+                string newString = whoWinString();
                 timer1.Enabled = false;
                 сдатьсяToolStripMenuItem.Enabled = false;
-                bool firstPlayerWin = false;
-                if (_withHuman == 0) //играем с компьютером
-                {
-                        newString = "Вы проиграли";
-                }
-                else
-                {
-                    if (!_playerColor)
-                    {
-                        if (!step)
-                        {
-                            newString = "Игрок 2 победил";
-                        }
-                        else
-                        {
-                            firstPlayerWin = true;
-                            newString = "Игрок 1 победил";
-                        }
-                    }
-                    else
-                    {
-                        if (step)
-                        {
-                            newString = "Игрок 2 победил";
-                        }
-                        else
-                        {
-                            firstPlayerWin = true;
-                            newString = "Игрок 1 победил";
-                        }
-                    }
-
-                }
+                bool firstPlayerWin = whoWinBool();
+                
 
                 if (_withHuman == 0) //с компьютером
                 {
@@ -1469,6 +1502,23 @@ namespace Шашки
                     _gameStarted = false;
                 }
             }
+        }
+
+        private void clearCheckersFromWindow()
+        {
+            foreach (var ch in checkerArray)
+            {
+                if (ch.Parent == pictureBox1)
+                {
+                    pictureBox1.Controls.Remove(ch);
+                }
+                if (ch.Parent == this)
+                {
+                    Controls.Remove(ch);
+                }
+            }
+            this.Invalidate();
+            pictureBox1.Invalidate();
         }
 
         private void form1FormClosing(object sender, FormClosingEventArgs e)
@@ -1612,9 +1662,19 @@ namespace Шашки
         {
             int numberCh = 0;
             int count = 0;
+            int whiteCheckers = 0;
+            int blackCheckers = 0;
+            for (int i = 0; i < 24; i++ )
+            {
+                var asd = checkerArray[i];
+                asd.setPosition(1,1);
+            }
+
+
+
             for (int i = 8; i > 0; i--)
             {
-                int startVert = i%2 == 0 ? 2 : 1;
+                int startVert = i % 2 == 0 ? 2 : 1;
                 for (int j = 1; j < 5; j++)
                 {
                     char symbol = boardChecker[count];
@@ -1639,6 +1699,14 @@ namespace Шашки
                         asd.setPosition(startVert, i);
                         asd.Location = new Point((asd.position.X - 1) * 50, (8 - asd.position.Y) * 50);
                         asd.color = color;
+                        if (!color)
+                        {
+                            whiteCheckers++;
+                        }
+                        else
+                        {
+                            blackCheckers++;
+                        }
                         asd.king = king;
                         if (!king)
                         {
@@ -1654,12 +1722,41 @@ namespace Шашки
                     ++count;
                 }
             }
+
+
+
+
+            for (int i = whiteCheckers; i < 12; i++ )
+            {
+                var chObj = checkerArray[numberCh];
+                chObj.color = false;
+                chObj.Image = Properties.Resources.Шашка_2;
+                pictureBox1.Controls.Remove(chObj);
+                chObj.BackColor = Color.FromArgb(63, 63, 63);
+                chObj.Location = endPosition(chObj.color);
+                Controls.Add(chObj);
+                chObj.BringToFront();
+                chObj.setPosition(-1, -1);
+                chObj.click = false;
+                ++numberCh;
+            }
+            for (int i = blackCheckers; i < 12; i++)
+            {
+                var chObj = checkerArray[numberCh];
+                chObj.color = true;
+                chObj.Image = Properties.Resources.Шашка_1;
+                pictureBox1.Controls.Remove(chObj);
+                chObj.BackColor = Color.FromArgb(63, 63, 63);
+                chObj.Location = endPosition(chObj.color);
+                Controls.Add(chObj);
+                chObj.BringToFront();
+                chObj.setPosition(-1, -1);
+                chObj.click = false;
+                ++numberCh;
+            }
             for (int i = numberCh; i < checkerArray.Count(); i++)
             {
-                var chObj = checkerArray[i];
-                chObj.setPosition(-1, -1);
-                chObj.Location = new Point(400, 400);
-                chObj.click = false;
+                
             }
             char stepCh = boardChecker[count]; //чей ход
             bool newStep = false;
@@ -1671,39 +1768,214 @@ namespace Шашки
             pictureBox1.Invalidate();
         }
 
-        private void timerLabel_Click(object sender, EventArgs e)
-        {
 
+        private Timer _timerForChangePos;
+        private int countChangePos;
+        private int realChange;
+
+        private ArrayList checkerMovesList;
+        private ArrayList stepChangeX;
+        private ArrayList stepChangeY;
+        private ArrayList endPositionChecker;
+
+        private void changePositionElapsed(Object sender, EventArgs e)
+        {
+            if (checkerMovesList.Count == 0)
+            {
+                _timerForChangePos.Enabled = false;
+            }
+
+            for (int i = 0; i < checkerMovesList.Count; i++) 
+            { 
+                var findChangePosCh = (Checker) checkerMovesList[i];
+                Point oldLocation = findChangePosCh.Location;
+                var endPoint = (Point)endPositionChecker[i];
+
+
+                int changeX = Convert.ToInt32(stepChangeX[i]);
+                float changeLittleY = Convert.ToInt32(Math.Abs((float)stepChangeY[i]));
+
+                int changeY;
+                if (changeLittleY > 0)
+                {
+                    changeY = Convert.ToInt32((float)stepChangeY[i]);
+                } else
+                {
+                    changeY = Convert.ToInt32((float)stepChangeY[i] > 0 ? 1 : -1);
+                }
+
+                int newX, newY;
+                if (findChangePosCh.Parent == pictureBox1)
+                {
+                    //int realXPos = oldLocation.X + pictureBox1.Location.X;
+                    int realYPos = oldLocation.Y + pictureBox1.Location.Y;
+
+
+
+                    newX = oldLocation.X + changeX;
+                    if ((float)stepChangeY[i] < 0)
+                    {
+                        newY = realYPos + changeY <= endPoint.Y ? 0 : oldLocation.Y + changeY;
+                    }
+                    else
+                    {
+                        newY = realYPos + changeY >= endPoint.Y ? oldLocation.Y : oldLocation.Y + changeY;
+                    }
+                    newY = newY < 0 ? 0 : newY;
+                    findChangePosCh.Location = new Point(newX, newY);
+                } else
+                {
+                    if ((float)stepChangeX[i] < 0)
+                    {
+                        newX = oldLocation.X + changeX <= endPoint.X ? endPoint.X : oldLocation.X + changeX;
+                    }
+                    else
+                    {
+                        newX = oldLocation.X + changeX >= endPoint.X ? endPoint.X : oldLocation.X + changeX;
+                    }
+                    
+                    if ((float)stepChangeY[i] < 0)
+                    {
+                        newY = oldLocation.Y + changeY <= endPoint.Y ? endPoint.Y : oldLocation.Y + changeY;
+                    }
+                    else
+                    {
+                        newY = oldLocation.Y + changeY >= endPoint.Y ? endPoint.Y : oldLocation.Y + changeY;
+                    }
+                    
+                }
+                findChangePosCh.Location = new Point(newX, newY);
+                if (findChangePosCh.Location.X < 0)  //ушли влево за край стола
+                {
+                    Point newPosition = new Point(pictureBox1.Location.X + oldLocation.X - 50, pictureBox1.Location.Y + oldLocation.Y);
+                    pictureBox1.Controls.Remove(findChangePosCh);
+
+                    findChangePosCh.BackColor = Color.FromArgb(63, 63, 63);
+                    findChangePosCh.Location = newPosition;
+                    Controls.Add(findChangePosCh);
+                    findChangePosCh.BringToFront();
+                }
+                if (findChangePosCh.Location.X > pictureBox1.Width - 50 && findChangePosCh.Parent==pictureBox1)  //ушли вправо за край стола
+                {
+                    int wigthImageX = pictureBox1.Width;
+                    Point newPosition = new Point(pictureBox1.Location.X +wigthImageX, pictureBox1.Location.Y + oldLocation.Y);
+                    pictureBox1.Controls.Remove(findChangePosCh);
+
+                    findChangePosCh.BackColor = Color.FromArgb(63, 63, 63);
+                    findChangePosCh.Location = newPosition;
+                    Controls.Add(findChangePosCh);
+                    findChangePosCh.BringToFront();
+                }
+                findChangePosCh.Invalidate();
+            }
+            realChange += 1;
+            if (realChange >= countChangePos)
+            {
+                _timerForChangePos.Enabled = false;
+                for (int i = 0; i < checkerMovesList.Count; i++) //ушли влево за край стола
+                {
+                    var findChangePosCh = (Checker) checkerMovesList[i];
+                    findChangePosCh.Location = (Point)endPositionChecker[i];
+                    findChangePosCh.click = false;
+                    findChangePosCh.setPosition(-1, -1);
+                    findChangePosCh.knock = false;
+
+                    findChangePosCh.Invalidate();
+                }
+            }
+        }
+         
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+            pictureBox2.Invalidate();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        /// <summary>
+        /// Возвращает конечную позицию шашки, после того, как ее сбили. Т.е. куда ей требуется переместиться (в координатах form1)
+        /// </summary>
+        /// <param name="colorCh">Цвет шашки, для определения позиции</param>
+        /// <returns>позицию</returns>
+        private Point endPosition(bool colorCh)  //false - нижние (белые)
         {
+            int startXBlack = 47;  //X позиция шашек слева (черных)
+            int startXWhite = 644; //X позиция шашек справа (белых)
+            int margin = 6; //расстояние между шашками по бокам и сверху
+            int startY = 132;  //Y - одинаковый для левых и правых
+            Point rtPoint = new Point(-1,-1);
 
+            int countCh = checkerArray.Count(realCh => realCh.color == colorCh && realCh.position.X < 0);
+
+            int countRow = countCh/2;  //количество строк
+            int numInRow = countCh % 2; //0 - первая в строке, 1 - вторая
+
+            int retX = colorCh ? startXBlack : startXWhite;
+            retX = numInRow == 1 ? retX + 50 + margin: retX;
+
+            int marginY = countRow > 0 ? (countRow - 1) * margin : 0;
+
+            int retY = countRow > 0 ? startY +  50 * countRow + marginY : startY;
+
+            rtPoint.X = retX;
+            rtPoint.Y = retY;
+            return rtPoint;
+        } 
+
+        private void movecheckerToPosition(ArrayList moveChList)
+        {
+            if (checkerMovesList == null)
+            {
+               checkerMovesList =  new ArrayList(5);
+            }
+            if (stepChangeX == null)
+            {
+                stepChangeX = new ArrayList(5);
+            }
+            if (stepChangeY == null)
+            {
+                stepChangeY = new ArrayList(5);
+            }
+            if (endPositionChecker == null)
+            {
+                endPositionChecker = new ArrayList(5);
+            }
+            realChange = 0;
+            checkerMovesList.Clear();
+            stepChangeX.Clear();
+            stepChangeY.Clear();
+            endPositionChecker.Clear();
+ 
+
+            checkerMovesList = moveChList;
+
+            int timerInterval = 10;
+            countChangePos = 100 / timerInterval;
+
+
+            for (int i = 0; i < checkerMovesList.Count; i++ )
+            {
+                Checker chMove = (Checker) checkerMovesList[i];
+                Point endPoint = endPosition(chMove.color);
+                Point startPoint = chMove.Location;
+                startPoint.X += pictureBox1.Location.X;
+                startPoint.Y += pictureBox1.Location.Y;
+                endPositionChecker.Add(endPoint);
+                float changeX = (float)(endPoint.X - startPoint.X)/countChangePos;
+                float changeY = (float)(endPoint.Y - startPoint.Y) / countChangePos;
+                stepChangeX.Add(changeX);
+                stepChangeY.Add(changeY);
+                chMove.setPosition(-1, -1);
+                chMove.BringToFront();
+            }
+
+
+
+
+
+            _timerForChangePos = new Timer { Interval = timerInterval };
+            _timerForChangePos.Tick += changePositionElapsed;
+            _timerForChangePos.Enabled = true;
         }
 
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

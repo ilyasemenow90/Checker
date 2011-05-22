@@ -31,6 +31,7 @@ namespace Шашки
             fight = false;
             knock = false;
             position = new Point(-1, -1);
+            BackColor = Color.Transparent;
         }
 
         public void setPosition(int x, int y) 

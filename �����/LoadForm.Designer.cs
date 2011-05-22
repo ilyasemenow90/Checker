@@ -46,6 +46,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.ForeColor = System.Drawing.Color.BurlyWood;
             this.label1.Location = new System.Drawing.Point(104, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(276, 19);
@@ -59,8 +60,9 @@
             // LoadForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(523, 130);
+            this.ClientSize = new System.Drawing.Size(510, 130);
             this.ControlBox = false;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar1);
