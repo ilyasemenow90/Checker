@@ -54,7 +54,7 @@ namespace Шашки
         private bool _gameStarted;
 
 
-        private Player backgroundPlayer, gameMusic;
+       // private Player backgroundPlayer, gameMusic;
  
         [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
         static extern void EI_MakeMove(string move);
@@ -98,12 +98,11 @@ namespace Шашки
         {
             InitializeComponent();
 
-            backgroundPlayer = new Player();
-            gameMusic = new Player();
+            //backgroundPlayer = new Player();
+            //gameMusic = new Player();
 
-            backgroundPlayer.Open(@"background.mp3");
-            
-
+            //backgroundPlayer.Play("background.mp3");
+            //backgroundPlayer.Pause();
 
             _timeGame = 0;
             logMove = false;
@@ -141,6 +140,11 @@ namespace Шашки
             for (int i = start; i < end; i++)
             {
                 Checker asd = checkerArray[i];
+
+                if (asd.Parent == this)
+                {
+                    Controls.Remove(asd);
+                }
 
                 int newX = startZero ? deltaX * 2 + 1 : deltaX * 2 + 2;
                 int newY = 8 - deltaY;
@@ -579,7 +583,7 @@ namespace Шашки
             {
                 if (_withHuman == 0)
                 {
-                    _timerForComputerStep = new Timer {Interval = 10};
+                    _timerForComputerStep = new Timer { Interval = 100 };
                     _timerForComputerStep.Tick += computerTimerElapsed;
                     _timerForComputerStep.Enabled = true;
                 }
@@ -603,6 +607,8 @@ namespace Шашки
             }
             createCheckers(0, 12, true);
             createCheckers(12, 24, false);
+            pictureBox1.Invalidate();
+            Invalidate();
         }
 
         private bool whoWinBool()
@@ -808,6 +814,7 @@ namespace Шашки
                 asd.SendToBack();
             }
             pictureBox1.Invalidate();
+            Invalidate();
         }
 
 
@@ -1364,6 +1371,7 @@ namespace Шашки
             bool playerColorBeforeSettings = Properties.Settings.Default.Player1_color;
             var newForm = new FormSettings();
             newForm.ShowDialog(this);
+            /*
             if (Properties.Settings.Default.PlayBackgroundMusic)
             {
                 backgroundPlayer.Play(true);
@@ -1373,6 +1381,7 @@ namespace Шашки
             {
                 backgroundPlayer.Pause();
             }
+            */
             if (Properties.Settings.Default.Player1_color != playerColorBeforeSettings)
             {
                  const string addStr = @"Желаете ли Вы начать игру с новыми параметрами?";
@@ -1399,11 +1408,13 @@ namespace Шашки
                 startNewGame(true);
             }
 
+            /*
             if (backgroundPlayer.IsOpen() && Properties.Settings.Default.PlayBackgroundMusic)
             {
                 backgroundPlayer.Play(true);
                 backgroundPlayer.MasterVolume = 10 * 50; //max Volume 10*100
             }
+            */
         }
 
         public void refreshImage()
@@ -1582,7 +1593,7 @@ namespace Шашки
                     var ch = checkerFromPosition(new Point(startVert, i));
                     if (ch != null)
                     {
-                        bool black = false;  //bBчерные wW белые 
+                        bool black = false;  //bB черные wW белые 
                         bool king = false;
                         if (ch.color) //черные
                         {
@@ -1648,6 +1659,8 @@ namespace Шашки
 
             createCheckers(0, 12, true);
             createCheckers(12, 24, false);
+            pictureBox1.Invalidate();
+            Invalidate();
 
             if (withHimGame == 1) //игра с человеком
             {
@@ -1802,6 +1815,34 @@ namespace Шашки
         private ArrayList stepChangeY;
         private ArrayList endPositionChecker;
 
+        private void stopTimer()
+        {
+            if (_timerForChangePos.Enabled)
+            {
+                _timerForChangePos.Enabled = false;
+                for (int i = 0; i < checkerMovesList.Count; i++) //ушли влево за край стола
+                {
+                    var findChangePosCh = (Checker)checkerMovesList[i];
+                    if (findChangePosCh.Parent == pictureBox1)
+                    {
+                        pictureBox1.Controls.Remove(findChangePosCh);
+                        findChangePosCh.BackColor = Color.FromArgb(63, 63, 63);
+                        Controls.Add(findChangePosCh);
+                        findChangePosCh.BringToFront();
+                    }
+                    findChangePosCh.Location = (Point)endPositionChecker[i];
+                    findChangePosCh.click = false;
+                    findChangePosCh.setPosition(-1, -1);
+                    findChangePosCh.knock = false;
+
+
+
+                    findChangePosCh.Invalidate();
+                    //Invalidate();
+                }
+            }
+        }
+
         private void changePositionElapsed(Object sender, EventArgs e)
         {
             if (checkerMovesList.Count == 0)
@@ -1820,13 +1861,7 @@ namespace Шашки
                 float changeLittleY = Convert.ToInt32(Math.Abs((float)stepChangeY[i]));
 
                 int changeY;
-                if (changeLittleY > 0)
-                {
-                    changeY = Convert.ToInt32((float)stepChangeY[i]);
-                } else
-                {
-                    changeY = Convert.ToInt32((float)stepChangeY[i] > 0 ? 1 : -1);
-                }
+                changeY = changeLittleY > 0 ? Convert.ToInt32((float)stepChangeY[i]) : Convert.ToInt32((float)stepChangeY[i] > 0 ? 1 : -1);
 
                 int newX, newY;
                 if (findChangePosCh.Parent == pictureBox1)
@@ -1895,20 +1930,9 @@ namespace Шашки
             realChange += 1;
             if (realChange >= countChangePos)
             {
-                _timerForChangePos.Enabled = false;
-                for (int i = 0; i < checkerMovesList.Count; i++) //ушли влево за край стола
-                {
-                    var findChangePosCh = (Checker) checkerMovesList[i];
-                    findChangePosCh.Location = (Point)endPositionChecker[i];
-                    findChangePosCh.click = false;
-                    findChangePosCh.setPosition(-1, -1);
-                    findChangePosCh.knock = false;
-
-                    findChangePosCh.Invalidate();
-                }
+                stopTimer();
             }
         }
-         
 
         /// <summary>
         /// Возвращает конечную позицию шашки, после того, как ее сбили. Т.е. куда ей требуется переместиться (в координатах form1)
@@ -1958,6 +1982,20 @@ namespace Шашки
             {
                 endPositionChecker = new ArrayList(5);
             }
+ 
+            if (moveChList.Count == 0)
+            {
+                return;
+            }
+
+            if (_timerForChangePos!=null)
+            {
+                if (_timerForChangePos.Enabled)
+                {
+                    stopTimer();
+                }
+            }
+
             realChange = 0;
             checkerMovesList.Clear();
             stepChangeX.Clear();
