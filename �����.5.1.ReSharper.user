@@ -8,14 +8,18 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="47381" fromTop="13" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Checker.cs" caret="486" fromTop="12" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:AboutBox1.resx" caret="491" fromTop="15" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="67878" fromTop="18" />
     </RecentFiles>
     <RecentEdits>
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="50644" fromTop="9" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="50949" fromTop="19" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="51916" fromTop="16" />
       <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="52181" fromTop="22" />
-      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="68721" fromTop="16" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="68885" fromTop="16" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="68155" fromTop="31" />
+      <File id="DD5F6774-4013-43D9-931C-844AA61957E2/f:Form1.cs" caret="75658" fromTop="22" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -29,4 +33,12 @@
     </NUnitInstallDir>
     <UseAddins>Never</UseAddins>
   </UnitTestRunnerNUnit>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Qualified:Шашки.Checker">
+      <Item value="knock" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Default">
+      <Item value="false" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
 </Configuration>

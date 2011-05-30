@@ -1840,6 +1840,10 @@ namespace Шашки
                     findChangePosCh.Invalidate();
                     //Invalidate();
                 }
+                checkerMovesList.Clear();
+                stepChangeX.Clear();
+                stepChangeY.Clear();
+                endPositionChecker.Clear();
             }
         }
 
@@ -2025,6 +2029,7 @@ namespace Шашки
                 stepChangeY.Add(changeY);
                 chMove.setPosition(-1, -1);
                 chMove.BringToFront();
+                chMove.knock = false;
             }
 
             _timerForChangePos = new Timer { Interval = timerInterval };
