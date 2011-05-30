@@ -32,11 +32,3 @@ C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.Statis
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.InsertPlayerNameForm.resources
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
-<<<<<<< HEAD
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.exe.manifest
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.application
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.TrustInfo.xml
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.exe.manifest
-C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.application
-=======
->>>>>>> my
