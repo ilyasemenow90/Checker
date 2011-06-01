@@ -37,3 +37,5 @@ C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Шашки.applicatio
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.TrustInfo.xml
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.exe.manifest
 C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\obj\x86\Debug\Шашки.application
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Resources\Сайт помощи.chm
+C:\Users\Lexus\Desktop\Diplom\Checker\Шашки\bin\Debug\Resources\SiDra.dll

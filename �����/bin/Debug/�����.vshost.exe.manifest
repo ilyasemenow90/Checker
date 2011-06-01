@@ -42,17 +42,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Шашки.exe" size="367104">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Шашки.exe" size="476160">
       <assemblyIdentity name="Шашки" version="0.5.0.1" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>gfKYP6gNL5OlaAF3nhd9s27w1tY=</dsig:DigestValue>
+        <dsig:DigestValue>5v9N7VwqVAcF++BTUygnaHDn5D4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="Resources\SiDra.dll" size="82944">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>8tcP0BBZQtorLQK8JmvM4xdn0Uk=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="SiDra.dll" size="82944">
     <hash>
       <dsig:Transforms>

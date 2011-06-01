@@ -8,7 +8,7 @@ namespace Шашки
 {
     class Database
     {
-        const string filePath = @"Games.xml";
+        const string filePath = @"Resources//Games.xml";
         static Database instance = null;
         static readonly object padlock = new object();
 

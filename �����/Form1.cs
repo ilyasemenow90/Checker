@@ -7,13 +7,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Collections;
-
+using System.Diagnostics;
 
 namespace Шашки
 {
     public partial class Form1 : Form
     {
-        private const string helpFilePath = "help.chm";
+        private const string helpFilePath = "Resources\\Сайт помощи.chm";
+        private const string sidraDLLFile = "Resources\\SiDra.dll";
         /// <summary>
         /// Подсвечивать возможные ходы?
         /// </summary>
@@ -53,41 +54,27 @@ namespace Шашки
         /// </summary>
         private bool _gameStarted;
 
-
-       // private Player backgroundPlayer, gameMusic;
- 
-        [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
+        [DllImport(sidraDLLFile, CharSet = CharSet.Ansi)]
         static extern void EI_MakeMove(string move);
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        [DllImport(sidraDLLFile, CharSet = CharSet.Auto)]
         static extern StringBuilder EI_Think();
 
-        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        //static extern StringBuilder EI_PonderHit(StringBuilder move);
-
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        [DllImport(sidraDLLFile, CharSet = CharSet.Auto)]
         static extern void EI_Initialization(PfSearchInfo si, int memLim);
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        [DllImport(sidraDLLFile, CharSet = CharSet.Auto)]
         static extern void EI_NewGame();
 
-        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        //static extern void EI_Stop();
-
-        [DllImport("SiDra.dll", CharSet = CharSet.Ansi)]
+        [DllImport(sidraDLLFile, CharSet = CharSet.Ansi)]
         static extern void EI_SetupBoard(string pos);
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        [DllImport(sidraDLLFile, CharSet = CharSet.Auto)]
         static extern void EI_SetTimeControl(int time, int inc);
 
-        [DllImport("SiDra.dll", CharSet = CharSet.Auto)]
+        [DllImport(sidraDLLFile, CharSet = CharSet.Auto)]
         static extern void EI_SetTime(int time, int otime);
 
-        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-       // static extern StringBuilder EI_GetName();
-
-        //[DllImport("SiDra.dll", CharSet = CharSet.Auto)]
-        //static extern void EI_OnExit();
 
         delegate void PfSearchInfo(int score, int depth, int speed, StringBuilder pv, StringBuilder cm);
 
@@ -1491,11 +1478,24 @@ namespace Шашки
 
         private void какИгратьToolStripMenuItemClick(object sender, EventArgs e)
         {
+            try
+            {
+                Process fl = new Process();
+                fl.StartInfo.ErrorDialog = true;
+                fl.StartInfo.FileName = helpFilePath;
+                fl.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            /*
             if (File.Exists(helpFilePath))
             {
                 Help.ShowHelp(this, helpFilePath);
             }
-            
+            */
         }
 
         private void сдатьсяToolStripMenuItemClick(object sender, EventArgs e)

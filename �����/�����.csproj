@@ -182,9 +182,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Сайт помощи.chm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Шашки_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\SiDra.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SiDra.dll" />
     <None Include="Ресурсы\Белая_шашка.png" />
     <None Include="Ресурсы\Белая_шашка_дамка.png" />
@@ -192,7 +198,6 @@
     <None Include="Ресурсы\Стол.png" />
     <None Include="Ресурсы\Черная_шашка.png" />
     <None Include="Ресурсы\Черная_шашка_дамка.png" />
-    <None Include="Ресурсы\Чайковский-Октябрь.mp3" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
