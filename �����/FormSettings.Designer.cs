@@ -37,8 +37,6 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -136,28 +134,6 @@
             this.checkBox3.Text = "Сохранять игру перед выходом";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.ForeColor = System.Drawing.Color.BurlyWood;
-            this.checkBox4.Location = new System.Drawing.Point(210, 81);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(188, 17);
-            this.checkBox4.TabIndex = 5;
-            this.checkBox4.Text = "Воспроизводить игровые звуки";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.ForeColor = System.Drawing.Color.BurlyWood;
-            this.checkBox5.Location = new System.Drawing.Point(210, 107);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(199, 17);
-            this.checkBox5.TabIndex = 6;
-            this.checkBox5.Text = "Воспроизводить фоновую музыку";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(210, 144);
@@ -187,8 +163,6 @@
             this.ControlBox = false;
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
@@ -218,8 +192,6 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
     }
